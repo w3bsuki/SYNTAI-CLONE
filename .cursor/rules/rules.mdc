@@ -1,0 +1,131 @@
+---
+description: 
+globs: 
+---
+# Cursor Project Rules for AI Agency Website
+
+This `rules.md` file outlines the guidelines and rules for the AI Agency website project. Please adhere to these rules when generating or modifying code within this project using Cursor.
+
+## 1. Technology Stack
+
+- **Framework:**  Utilize **Next.js** (version 15 or later if possible) for the React framework.  Ensure the project structure follows the **Next.js `app` directory structure** for routing and layouts.
+- **Language:** Use **TypeScript** for all JavaScript code. Enforce strong typing and leverage TypeScript's features for better code maintainability and readability.
+- **Styling:** Employ **Tailwind CSS** for all styling.  Prioritize utility-first styling and ensure consistent application of Tailwind CSS classes throughout the project.
+- **Component Library:**  Primarily use **Shadcn UI** components whenever suitable UI elements are required.  If a specific UI element is not available in Shadcn UI, create custom React components styled with Tailwind CSS, aiming for visual consistency with Shadcn UI.
+
+## 2. Component Library Usage - Shadcn UI First
+
+- **Prioritize Shadcn UI:**  For common UI elements (buttons, cards, forms, navigation, etc.), always check if a suitable component exists in the Shadcn UI library first.
+- **Custom Components when Necessary:** If a specific UI element is not available in Shadcn UI, create a custom React component. Ensure custom components are styled with Tailwind CSS and maintain visual consistency with the overall Shadcn UI style and the design language of the project.
+- **Consistent Shadcn UI Styling:**  When using Shadcn UI components, customize them using Tailwind CSS classes and Shadcn UI's theming and variant options to fit the project's design. Avoid overriding Shadcn UI styles with external CSS unless absolutely necessary.
+
+## 3. Styling and Design Principles
+
+- **Dark Theme:**  The website should have a **predominantly dark theme**, similar to `devtool-magicui.vercel.app`. Use dark background colors and light text colors for optimal contrast and modern aesthetic.
+- **Clean and Modern Design:** Aim for a **clean, minimal, and modern design** aesthetic, inspired by `devtool-magicui.vercel.app` and the general style found on websites showcased on `21st.dev`.
+- **Typography:** Use **modern sans-serif fonts** for all text elements to ensure readability and a contemporary look. Select fonts that complement the dark theme and overall design.
+- **Color Palette:**  Maintain a **limited and cohesive color palette**. Primarily use shades of gray for backgrounds and surfaces, with **accent colors** (e.g., blues, purples, or teals) used sparingly for highlights, interactive elements, and visual interest. Ensure accent colors are used consistently throughout the website.
+- **Whitespace and Spacing:**  Utilize **whitespace effectively** to create a clean and uncluttered layout. Pay attention to spacing and padding to ensure elements are well-balanced and visually appealing.
+- **Subtle Animations and Transitions:**  Where appropriate, incorporate **subtle animations and transitions** to enhance user experience and add a touch of polish. Use Tailwind CSS's animation and transition utilities or consider lightweight animation libraries if needed.
+
+## 4. Code Style and Best Practices
+
+- **Readability:**  Write **clean, readable, and well-commented code**. Prioritize code clarity and maintainability.
+- **Component Modularity:**  Break down the UI into **small, reusable, and well-defined React components**. Follow component-based architecture principles.
+- **React Best Practices:** Adhere to React best practices, including proper state management, efficient rendering, and avoiding anti-patterns.
+- **TypeScript Best Practices:**  Leverage TypeScript features effectively. Define clear types and interfaces for props and data structures. Minimize the use of `any` type.
+- **Tailwind CSS Best Practices:**  Utilize Tailwind CSS utility classes effectively. Avoid writing custom CSS unless absolutely necessary.  Maintain consistency in Tailwind class usage.
+- **Error Handling:** Implement proper error handling and user feedback mechanisms where applicable.
+
+## 5. Naming Conventions
+
+- **Components:** Use PascalCase for component names (e.g., `Header`, `ServiceCard`, `ContactForm`).  Place components in appropriate directories (e.g., `components/ui` for Shadcn UI-style components, `components/sections` for page sections).
+- **Variables and Functions:** Use camelCase for variables and function names (e.g., `handleButtonClick`, `serviceData`, `isDarkMode`).
+- **Types and Interfaces:** Use PascalCase for types and interfaces (e.g., `Service`, `UserData`, `ButtonProps`).
+
+## 6. General Guidance for Cursor
+
+- **Adhere to these rules:** When generating code or making modifications, Cursor should strictly adhere to the rules outlined in this `rules.md` file.
+- **Prioritize consistency:** Ensure consistency in technology choices, styling, component usage, and code style throughout the project.
+- **Ask for clarification:** If any rule is unclear or if there's a conflict in instructions, Cursor should ask for clarification before proceeding.
+- **Focus on Maintainability and Scalability:**  When generating code or suggesting solutions, prioritize maintainability, scalability, and long-term project health.
+
+## 7. Website Functionality and Purpose
+
+- **Primary Goal:** The website's main purpose is to **showcase and offer AI Agents and AI-powered services/solutions to businesses, enterprises, and industries.**
+- **Agent Showcase:**  The website will prominently feature your AI Agents: Aidr, Aidy, and Aido. Each agent should have a dedicated section or page detailing its capabilities, target audience, and potential use cases.
+- **Service/Solution Offerings:**  The website will clearly present the AI-powered services and solutions your agency provides to businesses across various sectors.
+- **Lead Generation and Contact:**  The website should be designed to generate leads and encourage potential clients to contact your agency for inquiries, demos, or consultations. Clear Calls-to-Action (CTAs) should be strategically placed throughout the site to facilitate contact.
+- **Professional and Trustworthy Image:** The website must project a professional, trustworthy, and cutting-edge image for your AI agency. The design, content, and user experience should reinforce your agency's expertise and credibility in the AI field.
+
+## 8. AI Agents - Descriptions and Functionality
+
+The website will feature the following AI Agents. Ensure consistent naming and branding for these agents throughout the website content.
+
+- **Agent: Aidr (Operator)**
+    - **Tagline (example):** "The Intelligent Automation Powerhouse for Your Business."
+    - **Description:** Aidr is a versatile AI Agent designed to streamline and automate complex business operations. Powered by n8n automation workflows and advanced AI capabilities, Aidr acts as a ChatGPT-like operator, but specifically tailored for business needs.
+    - **Key Functions:**
+        - **Workflow Automation:**  Automate repetitive tasks, data processing, and cross-system workflows using n8n.
+        - **Data Analysis and Reporting:** Generate insights from business data, create reports, and monitor key performance indicators.
+        - **Intelligent Task Management:** Prioritize tasks, manage schedules, and ensure efficient resource allocation.
+        - **Custom Integrations:** Connect various business tools and platforms for seamless data flow and automation.
+        - **Example Use Cases:** Customer onboarding automation, lead nurturing workflows, supply chain management optimization, internal process automation.
+    - **Target Audience:** Businesses and enterprises seeking comprehensive automation solutions and operational efficiency.
+
+- **Agent: Aidy (Customer Support)**
+    - **Tagline (example):** "Your AI-Powered Dispatch and Customer Service Agent."
+    - **Description:** Aidy is a dedicated AI Customer Support Agent, designed specifically for industries requiring efficient dispatch and customer interaction. Initially targeting Taxi and Transportation companies, Aidy handles customer inquiries, dispatch requests, and communication seamlessly through phone and text.
+    - **Key Functions:**
+        - **24/7 Customer Support:**  Provide always-available customer service via phone and text channels.
+        - **Dispatch Management:** Efficiently manage dispatch requests, assign drivers, and optimize routing (for Taxi/Transportation).
+        - **Automated Inquiry Handling:** Answer frequently asked questions, provide service information, and resolve common customer issues.
+        - **Appointment Scheduling:** Manage bookings and schedule appointments for services.
+        - **Multi-lingual Support (Optional):**  Potentially offer customer support in multiple languages.
+    - **Target Audience:** Taxi companies, transportation services, and businesses with high volumes of customer inquiries and dispatch needs.
+
+- **Agent: Aido (Task Administrator)**
+    - **Tagline (example):** "The Smart and Affordable Internal Business Assistant."
+    - **Description:** Aido is a cost-effective AI Agent designed to boost internal business efficiency by automating routine administrative and task-oriented functions.  Aido acts as a smart assistant for daily operations, freeing up human employees for more strategic work.
+    - **Key Functions:**
+        - **Meeting & Calendar Management:** Schedule meetings, send reminders, manage calendars.
+        - **Document & File Organization:**  Organize digital documents, tag files, and facilitate efficient searching within internal systems.
+        - **Data Entry & Basic Reporting:** Automate data entry tasks and generate simple reports from internal data.
+        - **Internal Communication Facilitation:** Summarize lengthy communication threads, route messages to relevant teams, and answer basic internal queries.
+        - **Project & Task Management (Basic):** Create and assign tasks, track progress on simple projects, and send task reminders to team members.
+    - **Target Audience:** Small to medium-sized businesses seeking to improve internal efficiency, reduce administrative overhead, and empower their teams with AI assistance at an affordable price point.
+
+## 9. Services and Solutions (Example Offerings)
+
+The website will showcase the following example services and solutions.  These should be presented as core offerings of your AI agency, demonstrating the practical applications of your AI Agents and expertise.  *(Feel free to refine these and add more based on your market research and specific focus)*
+
+- **AI Agent Deployment & Integration Services:**
+    - Service Description:  Professional deployment and integration of Aidr, Aidy, and Aido agents into your existing business infrastructure. We handle setup, customization, and training to ensure seamless adoption and optimal performance.
+    - Target Audience: Businesses of all sizes seeking to implement AI Agents without in-house expertise.
+
+- **Custom Automation Workflow Development (Powered by Aidr):**
+    - Service Description:  Bespoke development of n8n automation workflows tailored to your unique business processes. Leverage Aidr's capabilities to automate complex tasks, optimize operations, and improve efficiency.
+    - Target Audience: Businesses with specific, complex automation needs beyond off-the-shelf solutions.
+
+- **AI-Powered Customer Support Solutions (Using Aidy):**
+    - Service Description:  Implement and customize Aidy for your customer support needs.  We provide setup, training, and ongoing support for AI-driven dispatch, inquiry handling, and 24/7 customer service, particularly for transportation and service-based industries.
+    - Target Audience: Taxi companies, transportation services, and businesses with high customer interaction volumes.
+
+- **Internal Efficiency & AI Assistant Consulting (Leveraging Aido):**
+    - Service Description:  Consultation services to identify areas for internal process improvement and efficiency gains using AI. We help you implement Aido and optimize workflows to streamline administrative tasks and empower your team.
+    - Target Audience: Small to medium-sized businesses looking to enhance internal operations and reduce administrative burdens affordably.
+
+- **General AI Strategy & Consultation:**
+    - Service Description:  Comprehensive AI strategy and consultation services to help your business understand and leverage the power of Artificial Intelligence. We provide guidance on AI adoption, roadmap development, and identify opportunities for AI innovation within your industry.
+    - Target Audience: Businesses across all sectors looking to develop a long-term AI strategy and explore AI opportunities.
+
+## 10. Calls to Action (CTAs) and Agent Demos
+
+- **Prominent CTAs:**  Strategically place clear and compelling Calls-to-Action (CTAs) throughout the website to encourage user engagement and lead generation. Examples: "Get a Demo," "Contact Us," "Learn More," "Explore Our Agents," "Request a Consultation."
+- **Agent Demo Opportunities:**  For each agent, provide opportunities for users to experience a demo or interact with a sample agent.
+    - **Example for Aidy (Customer Support):**  Implement a "Call/Demo Aidy" button or section on the Aidy agent page.  This could potentially connect to an ElevenLabs voice agent API endpoint (as you suggested) to allow users to directly interact with a demo Aidy agent via voice. *(Further technical implementation details for demos will be defined later).*
+    - **Other Agent Demos:** Consider interactive demos or video demonstrations for Aidr and Aido to showcase their capabilities effectively.
+- **Contact Form:**  Ensure a clear and accessible contact form is available on the website for users to submit inquiries and requests.
+- **Contact Information:**  Display clear contact information (email address, phone number if applicable, agency address if desired) to facilitate direct communication.
+
+By following these rules, we aim to create a high-quality, visually appealing, and well-structured AI Agency website that effectively utilizes the chosen technology stack and design principles.
