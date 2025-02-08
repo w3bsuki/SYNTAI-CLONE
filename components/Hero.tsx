@@ -1,7 +1,10 @@
 "use client";
 
 import { StatusBadge } from "@/components/ui/status-badge";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Bot, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import React from "react";
 
 export default function Hero() {
   return (
@@ -12,71 +15,81 @@ export default function Hero() {
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center text-center space-y-8 md:space-y-12 max-w-5xl mx-auto">
+        <div className="flex flex-col items-center text-center space-y-6">
           {/* Badge */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="relative mb-8"
+          >
             <StatusBadge
-              leftIcon={Sparkles}
+              leftIcon={Bot}
               rightIcon={ArrowRight}
-              leftLabel="Transform"
-              rightLabel="Business"
+              leftLabel="Agents"
+              rightLabel="Solutions"
               status="success"
               color="blue"
               className="bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50"
             />
-          </div>
+          </motion.div>
 
           {/* Main Heading */}
-          <div className="space-y-4">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight">
-              <span className="block text-white">
-                AI-Powered Solutions for
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="max-w-4xl mx-auto space-y-4"
+          >
+            <h1 className="text-5xl md:text-7xl font-medium tracking-tight leading-tight">
+              <span className="block text-white">Power</span>
+              <span className="bg-gradient-to-r from-violet-500 via-fuchsia-400 to-amber-300 bg-clip-text text-transparent">
+                Government AI
               </span>
-              <span className="block mt-1 bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500 bg-clip-text text-transparent">
-                Modern Enterprise
-              </span>
+              <span className="block text-white">With Your Data</span>
             </h1>
+          </motion.div>
 
-            <p className="mt-6 text-xl text-zinc-400 max-w-3xl mx-auto">
-              Leverage cutting-edge artificial intelligence to automate workflows, enhance decision-making, 
-              and drive unprecedented business growth.
-            </p>
-          </div>
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto mt-6"
+          >
+            Make the best models with the best data. Scale Data Engine powers nearly every major foundation model, and with Scale GenAI Platform, leverages your enterprise data to unlock the value of AI.
+          </motion.p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-3 mt-8"
+          >
             <button
               onClick={() => window.location.href = '#contact'}
-              className="w-full sm:w-1/2 h-12 text-base font-medium text-white rounded-lg bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500 hover:opacity-90 transition-opacity duration-200"
+              className="px-6 h-10 text-sm font-medium text-black rounded-lg bg-white hover:bg-zinc-200 transition-colors duration-200"
             >
-              Get Started
+              Book a Demo →
             </button>
             <button
-              onClick={() => window.location.href = '#demo'}
-              className="w-full sm:w-1/2 h-12 text-base font-medium text-white rounded-lg border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/50 transition-all duration-200"
+              onClick={() => window.location.href = '#services'}
+              className="px-6 h-10 text-sm font-medium text-white rounded-lg border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/50 transition-all duration-200"
             >
-              Request Demo
+              Build AI →
             </button>
-          </div>
+          </motion.div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 mt-12 border-t border-zinc-800">
-            {[
-              { value: "99.9%", label: "Accuracy Rate" },
-              { value: "24/7", label: "Operation Time" },
-              { value: "500+", label: "Enterprises Served" },
-              { value: "10x", label: "Efficiency Boost" },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center"
-              >
-                <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-sm text-zinc-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="text-zinc-500 text-sm mt-8"
+          >
+            Scale works with Generative AI Companies, U.S. Government Agencies & Enterprises
+          </motion.p>
         </div>
       </div>
 
