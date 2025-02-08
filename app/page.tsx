@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero"
-import AgentSection from "@/components/ui/AgentSection"
+import AgentsSection from "@/components/agents-section"
 import Services from "@/components/Services"
 import AboutUs from "@/components/AboutUs"
 import Testimonials from "@/components/Testimonials"
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col bg-gray-900 text-white">
       <Hero />
-      <AgentSection />
+      <AgentsSection />
       <Services />
       <AboutUs />
       <Testimonials />

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { ButtonColorful } from "@/components/ui/button-colorful";
 import { HighlightGroup, HighlighterItem, Particles } from "@/components/ui/particle-effects";
 import Link from "next/link";
 
@@ -26,25 +26,16 @@ export default function CTA() {
                   Get started today and discover how our AI solutions can revolutionize your operations, boost efficiency, and drive growth.
                 </p>
                 <div className="mt-4 flex flex-col gap-4 sm:flex-row">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-zinc-200 text-zinc-900 hover:bg-zinc-100"
-                  >
-                    <Link href="#contact">
-                      Get Started
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="lg"
-                    className="border-zinc-700 text-zinc-300 hover:border-zinc-600 hover:bg-zinc-900 hover:text-zinc-100"
-                  >
-                    <Link href="#services">
-                      Learn More
-                    </Link>
-                  </Button>
+                  <ButtonColorful
+                    onClick={() => window.location.href = '#contact'}
+                    label="Get Started"
+                    className="min-w-[200px]"
+                  />
+                  <ButtonColorful
+                    onClick={() => window.location.href = '#services'}
+                    label="Learn More"
+                    className="min-w-[200px]"
+                  />
                 </div>
               </div>
             </div>

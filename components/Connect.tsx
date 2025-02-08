@@ -8,6 +8,7 @@ import { useAnimate } from "framer-motion";
 import { IconCloud } from "@/components/ui/interactive-icon-cloud";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import { ButtonColorful } from "@/components/ui/button-colorful";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 
 const techIcons = [
@@ -153,9 +154,10 @@ export function Connect() {
                         </p>
                         <div className="flex items-center gap-2 pt-2">
                           <Link href="#contact">
-                            <Button size="sm" className="bg-zinc-200 text-zinc-900 hover:bg-zinc-100">
-                              Schedule a Demo
-                            </Button>
+                            <ButtonColorful
+                              label="Schedule a Demo"
+                              className="h-8"
+                            />
                           </Link>
                           <Link
                             href="mailto:contact@example.com"

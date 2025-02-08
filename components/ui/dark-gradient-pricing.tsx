@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Check, X, Brain, Cpu, MessageCircle, Eye, Users, Phone, ChevronRight } from "lucide-react"; // Import icons
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { ButtonColorful } from "@/components/ui/button-colorful";
 import { Card } from "@/components/ui/card";
 import React from "react"; // Import React
 import Link from "next/link";
@@ -89,13 +90,11 @@ export const PricingCard = ({
             <Benefit key={index} {...benefit} />
           ))}
         </div>
-        <Button 
-          className="w-full mt-auto bg-zinc-200 text-zinc-900 hover:bg-zinc-300 hover:text-zinc-900 transition-all duration-200" 
-          variant="default" 
-          asChild
-        >
-          <Link href={href}>{CTA}</Link>
-        </Button>
+        <ButtonColorful 
+          className="w-full mt-auto" 
+          label={CTA}
+          onClick={() => window.location.href = href}
+        />
       </Card>
     </motion.div>
   );

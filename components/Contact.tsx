@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import Link from "next/link"
+import { ButtonColorful } from "@/components/ui/button-colorful"
 
 export default function Contact() {
   return (
@@ -32,14 +33,11 @@ export default function Contact() {
             className="w-full bg-zinc-800 text-zinc-200 placeholder:text-zinc-400 border-zinc-700 py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:border-transparent resize-none transition-colors duration-200"
           />
           
-          <Button 
-            asChild
-            className="w-full bg-zinc-300 text-zinc-900 hover:bg-zinc-200 hover:text-zinc-900 transition-all duration-200 hover:scale-105 hover:shadow-md data-[active=true]:bg-zinc-500"
-          >
-            <Link href="#contact">
-              Send Message
-            </Link>
-          </Button>
+          <ButtonColorful 
+            onClick={() => {}}
+            label="Send Message"
+            className="w-full"
+          />
         </form>
       </div>
     </section>
