@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ButtonColorful } from "@/components/ui/button-colorful";
-import { Brain, MessageCircle, Bot, CheckCircle2 } from "lucide-react";
+import { Brain, MessageCircle, Bot, CheckCircle2, Boxes, MessagesSquare, BarChart3 } from "lucide-react";
 import { Particles } from "@/components/ui/particle-effects";
+import { Badge } from "@/components/ui/badge";
 
 interface AgentCardProps {
   name: string;
@@ -15,41 +16,50 @@ interface AgentCardProps {
 }
 
 const agentIcons = {
-  aidr: Brain,
-  aigy: MessageCircle,
-  aido: Bot,
+  aidr: BarChart3,
+  aigy: MessagesSquare,
+  aido: Boxes,
 };
 
 const agentDetails = {
   aidr: {
-    title: "All In One Agent",
+    title: "Advanced Analytics and Predictions",
+    poweredBy: "Powered by Aidr",
     capabilities: [
       "Workflow Automation",
       "Data Analysis & Reporting",
       "Task Management",
       "Custom Integrations"
     ],
-    gradient: "from-indigo-500 via-purple-500 to-pink-500"
+    gradient: "from-indigo-500 via-purple-500 to-pink-500",
+    buttonText: "Explore Aidr",
+    status: "Business Ready"
   },
   aigy: {
-    title: "Customer Service Agent",
+    title: "24/7 Phone & Text Service",
+    poweredBy: "Powered by Aidy",
     capabilities: [
       "24/7 Customer Support",
       "Multi-channel Communication",
       "Automated Inquiry Handling",
       "Intelligent Responses"
     ],
-    gradient: "from-blue-500 via-cyan-400 to-teal-500"
+    gradient: "from-blue-500 via-cyan-400 to-teal-500",
+    buttonText: "Explore Aidy",
+    status: "24/7 Ready"
   },
   aido: {
-    title: "Business Assistant Agent",
+    title: "Automate complex data processes",
+    poweredBy: "Powered by Aido",
     capabilities: [
       "Document Processing",
       "Data Organization",
       "Workflow Automation",
       "Task Coordination"
     ],
-    gradient: "from-rose-500 via-red-400 to-orange-500"
+    gradient: "from-rose-500 via-red-400 to-orange-500",
+    buttonText: "Explore Aido",
+    status: "Enterprise Ready"
   }
 };
 
@@ -73,8 +83,18 @@ export function AgentCard({ name, description, icon, className }: AgentCardProps
           color="#3b82f6"
         />
 
+        {/* Status Badge - Moved above icon */}
+        <div className="mb-4 flex justify-center">
+          <Badge 
+            variant="outline" 
+            className="bg-zinc-900/80 backdrop-blur-sm border-zinc-800 text-zinc-300 py-1 px-3"
+          >
+            {details.status}
+          </Badge>
+        </div>
+
         {/* Icon Animation */}
-        <div className="mb-6 flex justify-center">
+        <div className="mb-2 flex flex-col items-center">
           <motion.div 
             className="relative flex h-24 w-24 items-center justify-center"
             animate={{ 
@@ -107,6 +127,17 @@ export function AgentCard({ name, description, icon, className }: AgentCardProps
               </div>
             </div>
           </motion.div>
+
+          {/* Online Badge */}
+          <div className="mt-4">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/20">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="text-sm font-medium text-emerald-500">Online</span>
+            </span>
+          </div>
         </div>
 
         {/* Content */}
@@ -123,15 +154,15 @@ export function AgentCard({ name, description, icon, className }: AgentCardProps
           {/* Capabilities */}
           <div className="mt-6 space-y-2">
             <p className="text-xs font-medium uppercase tracking-wider text-zinc-500">Capabilities</p>
-            <div className="space-y-2">
+            <div className="flex flex-wrap justify-center gap-2">
               {details.capabilities.map((capability, index) => (
-                <div 
+                <Badge
                   key={index}
-                  className="flex items-center justify-center gap-2 text-sm text-zinc-300"
+                  variant="outline"
+                  className="bg-zinc-900/80 backdrop-blur-sm border-zinc-800 text-zinc-300"
                 >
-                  <CheckCircle2 className="h-4 w-4 text-zinc-500" />
-                  <span>{capability}</span>
-                </div>
+                  {capability}
+                </Badge>
               ))}
             </div>
           </div>
@@ -140,7 +171,7 @@ export function AgentCard({ name, description, icon, className }: AgentCardProps
         {/* Action Button */}
         <div className="mt-6">
           <ButtonColorful
-            label="See in Action"
+            label={details.buttonText}
             onClick={() => {}}
             className={cn(
               "w-full hover:scale-105 transition-transform duration-200",
@@ -149,6 +180,11 @@ export function AgentCard({ name, description, icon, className }: AgentCardProps
             )}
           />
         </div>
+
+        {/* Powered by text */}
+        <p className="text-sm text-zinc-500 mt-4 opacity-80">
+          {details.poweredBy}
+        </p>
       </Card>
     </motion.div>
   );

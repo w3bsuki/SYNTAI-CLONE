@@ -51,6 +51,7 @@ export default function HeroBadge({
 
   const baseClassName = cn(
     "inline-flex items-center rounded-full border transition-colors",
+    "bg-zinc-900/80 backdrop-blur-sm border-zinc-800 text-zinc-300",
     badgeVariants[variant],
     sizeVariants[size],
     className

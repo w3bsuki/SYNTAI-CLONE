@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ButtonColorful } from "@/components/ui/button-colorful";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { Menu } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -13,45 +12,92 @@ import {
 } from "@/components/ui/sheet";
 
 const navigationItems = [
-  { name: "SOLUTIONS", href: "#solutions" },
+  { name: "SOLUTIONS", href: "#services" },
   { name: "AGENTS", href: "#agents" },
   { name: "ABOUT", href: "#about" },
 ];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle scroll events for navbar background
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle intersection observer for active section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    navigationItems.forEach((item) => {
+      const element = document.querySelector(item.href);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[#1a1a1a] bg-black">
-      <div className="mx-auto max-w-[1400px] px-6">
-        <nav className="flex h-16 items-center justify-between">
+    <header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        isScrolled ? "bg-black border-b border-zinc-800/50" : "bg-black"
+      )}
+    >
+      <div className="container mx-auto px-4 md:px-6">
+        <nav className="flex h-16 items-center justify-between max-w-[1400px] mx-auto">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-xl font-semibold text-white">SYNTAI</span>
+          <div className="flex-1 basis-0">
+            <Link 
+              href="/" 
+              className="flex items-center"
+            >
+              <span className="text-lg font-bold tracking-tight text-white">
+                SYNTAI
+              </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center justify-center gap-12">
             {navigationItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm text-zinc-400 hover:text-white transition-colors duration-200"
+                className={cn(
+                  "text-sm font-medium transition-colors duration-200",
+                  "hover:text-white",
+                  activeSection === item.href.substring(1) ? "text-white" : "text-zinc-300"
+                )}
               >
                 {item.name}
               </Link>
             ))}
           </div>
 
-          {/* Contact Button */}
-          <div className="hidden md:block">
-            <ButtonColorful
+          {/* Book a Demo Button */}
+          <div className="hidden md:flex items-center justify-end flex-1 basis-0">
+            <Button
               onClick={() => window.location.href = '#contact'}
-              label="Contact Us"
-              className="rounded-full border-0"
-            />
+              className="text-sm font-medium text-white bg-transparent hover:bg-zinc-800 border border-zinc-800 px-4 h-8 rounded-lg transition-all duration-200"
+            >
+              Book a Demo
+            </Button>
           </div>
 
           {/* Mobile Menu */}
@@ -61,15 +107,19 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                  className="relative text-zinc-400 hover:text-white"
                 >
-                  <Menu className="h-6 w-6" />
+                  {isOpen ? (
+                    <X className="h-5 w-5" />
+                  ) : (
+                    <Menu className="h-5 w-5" />
+                  )}
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="w-full border-l border-[#1a1a1a] bg-black px-6 py-8"
+                className="w-full border-l border-zinc-800/50 bg-black px-6 py-8"
               >
                 <div className="flex flex-col space-y-6">
                   {navigationItems.map((item) => (
@@ -77,19 +127,20 @@ export default function Header() {
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-lg text-zinc-400 hover:text-white transition-colors duration-200"
+                      className="text-lg text-zinc-300 hover:text-white transition-colors duration-200"
                     >
                       {item.name}
                     </Link>
                   ))}
-                  <ButtonColorful
+                  <Button
                     onClick={() => {
                       window.location.href = '#contact';
                       setIsOpen(false);
                     }}
-                    label="Contact Us"
-                    className="mt-4 rounded-full border-0"
-                  />
+                    className="text-sm font-medium text-white bg-transparent hover:bg-zinc-800 border border-zinc-800 px-4 h-8 rounded-lg transition-all duration-200"
+                  >
+                    Book a Demo
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>

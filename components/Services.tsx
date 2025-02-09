@@ -3,6 +3,9 @@
 import { Brain, Cpu, MessageCircle, Eye, ArrowRight } from "lucide-react"
 import { StatusBadge } from "@/components/ui/status-badge"
 import { TextShimmer } from "@/components/ui/text-shimmer"
+import { Typewriter } from "@/components/ui/typewriter"
+import HeroBadge from "@/components/ui/hero-badge"
+import { Badge } from "@/components/ui/badge"
 
 const services = [
   {
@@ -21,7 +24,7 @@ const services = [
       leftLabel: "Strategic",
       rightLabel: "Solutions",
       status: "success" as const,
-      color: "blue"
+      color: "emerald"
     }
   },
   {
@@ -40,7 +43,7 @@ const services = [
       leftLabel: "Advanced",
       rightLabel: "Analytics",
       status: "success" as const,
-      color: "violet"
+      color: "blue"
     }
   },
   {
@@ -59,7 +62,7 @@ const services = [
       leftLabel: "Intelligent",
       rightLabel: "Communication",
       status: "success" as const,
-      color: "orange"
+      color: "violet"
     }
   },
   {
@@ -78,12 +81,18 @@ const services = [
       leftLabel: "Visual",
       rightLabel: "Intelligence",
       status: "success" as const,
-      color: "blue"
+      color: "orange"
     }
   }
 ]
 
 export default function Services() {
+  const sectorTypes = [
+    "Business",
+    "Enterprise",
+    "Government"
+  ];
+
   return (
     <section id="services" className="relative overflow-hidden bg-black py-16 sm:py-24 md:py-32">
       {/* Background Elements */}
@@ -93,66 +102,89 @@ export default function Services() {
       <div className="relative z-10 container mx-auto px-4 md:px-6">
         {/* Section Header */}
         <div className="mx-auto max-w-[90%] sm:max-w-2xl text-center mb-12 sm:mb-16 md:mb-24">
-          <StatusBadge
-            leftIcon={Cpu}
-            rightIcon={ArrowRight}
-            leftLabel="Our"
-            rightLabel="Services"
-            status="success"
-            color="orange"
-            className="bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50"
+          <HeroBadge 
+            text="Services"
+            variant="outline"
+            icon={<Cpu className="w-4 h-4" />}
           />
 
-          <TextShimmer as="h2" className="mt-6 sm:mt-8 text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white" duration={3}>
-            Comprehensive AI Solutions for
-            <span className="block mt-1 bg-gradient-to-r from-emerald-500 via-blue-500 to-violet-500 bg-clip-text text-transparent">
-              Modern Businesses
-            </span>
-          </TextShimmer>
+          <div className="mt-6 sm:mt-8 flex flex-col items-center">
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-8" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
+              <span className="text-white">AI Solutions for</span>
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                <Typewriter 
+                  text={sectorTypes}
+                  speed={50}
+                  waitTime={3000}
+                  loop={true}
+                  className="inline-block"
+                  cursorClassName="text-blue-400 ml-1"
+                />
+              </span>
+            </h2>
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-8" />
+          </div>
 
-          <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
+          <p className="mt-6 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
             Transform your business with our cutting-edge AI services, tailored to meet your specific needs and objectives.
           </p>
         </div>
 
-        {/* Services Grid - Updated with better centering */}
-        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 max-w-5xl mx-auto place-items-center">
+        {/* Services Grid */}
+        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 max-w-5xl mx-auto">
           {services.map((service) => (
             <div
               key={service.title}
-              className="group relative w-full max-w-xl"
+              className="group relative w-full"
             >
-              <div className="relative flex flex-col items-center text-center h-full overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:bg-zinc-900/80 transition-all duration-300">
-                {/* Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-900/50 pointer-events-none`} />
-                
+              <div className={`relative flex flex-col items-center text-center h-full overflow-hidden rounded-2xl border bg-zinc-900/50 p-6 sm:p-8 transition-all duration-300 hover:bg-zinc-900/80 ${
+                service.gradient.includes("emerald") ? "border-emerald-500/20" :
+                service.gradient.includes("blue") ? "border-blue-500/20" :
+                service.gradient.includes("violet") ? "border-violet-500/20" :
+                "border-orange-500/20"
+              }`}>
                 {/* Status Badge */}
-                <div className="mb-4 sm:mb-6">
-                  <StatusBadge {...service.status} className="bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50" />
+                <div className="mb-4">
+                  <StatusBadge {...service.status} className={`bg-zinc-900/80 backdrop-blur-sm border-${
+                    service.gradient.includes("emerald") ? "emerald" :
+                    service.gradient.includes("blue") ? "blue" :
+                    service.gradient.includes("violet") ? "violet" :
+                    "orange"
+                  }-500/20`} />
                 </div>
 
                 {/* Icon */}
-                <div className={`relative inline-flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${service.gradient} p-[1px] group-hover:scale-110 transition-transform duration-300`}>
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/0 opacity-50" />
-                  <div className="flex h-full w-full items-center justify-center rounded-2xl bg-zinc-900">
-                    <service.icon className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
-                  </div>
+                <div className={`relative inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl border ${
+                  service.gradient.includes("emerald") ? "border-emerald-500/20" :
+                  service.gradient.includes("blue") ? "border-blue-500/20" :
+                  service.gradient.includes("violet") ? "border-violet-500/20" :
+                  "border-orange-500/20"
+                } bg-zinc-900`}>
+                  <div className={`absolute inset-0 rounded-2xl opacity-20 bg-gradient-to-br ${service.gradient}`} />
+                  <service.icon className="relative z-10 h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="mt-4 sm:mt-6 text-lg sm:text-xl font-semibold text-white">
+                <h3 className="mt-4 text-lg font-semibold text-white">
                   {service.title}
                 </h3>
-                <p className="mt-2 sm:mt-3 text-sm leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
+                <p className="mt-2 text-sm leading-relaxed text-zinc-400 max-w-[85%] mx-auto">
                   {service.description}
                 </p>
 
                 {/* Features */}
-                <div className="mt-5 sm:mt-6 space-y-2 w-full max-w-[90%]">
+                <div className="mt-5 space-y-2 w-full max-w-[85%]">
                   {service.features.map((feature) => (
                     <div 
                       key={feature} 
-                      className="flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-800/50 bg-zinc-900/50 backdrop-blur-sm hover:bg-zinc-900 hover:border-zinc-700/50 transition-colors duration-200"
+                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border bg-zinc-900/50 backdrop-blur-sm transition-colors duration-200 group-hover:bg-zinc-900 ${
+                        service.gradient.includes("emerald") ? "border-emerald-500/10" :
+                        service.gradient.includes("blue") ? "border-blue-500/10" :
+                        service.gradient.includes("violet") ? "border-violet-500/10" :
+                        "border-orange-500/10"
+                      }`}
                     >
                       <Cpu className={`h-3.5 w-3.5 shrink-0 ${
                         service.gradient.includes("emerald") ? "text-emerald-500" :
@@ -166,27 +198,28 @@ export default function Services() {
                 </div>
 
                 {/* Action Button */}
-                <div className="mt-6 sm:mt-8 w-full max-w-[90%]">
+                <div className="mt-6 w-full max-w-[85%]">
                   <button
                     onClick={() => {}}
                     className={`
-                      w-full h-10 sm:h-11 px-4 rounded-xl
+                      w-full h-10 px-4 rounded-xl
                       bg-zinc-900 
-                      border border-zinc-800
-                      text-sm font-medium text-white
+                      border text-sm font-medium text-white
+                      relative overflow-hidden
                       transition-all duration-300
-                      relative
-                      overflow-hidden
-                      group/btn
-                      hover:border-zinc-700
                       hover:scale-[1.02]
-                      hover:shadow-xl hover:shadow-zinc-950
+                      ${
+                        service.gradient.includes("emerald") ? "border-emerald-500/20 hover:border-emerald-500/30" :
+                        service.gradient.includes("blue") ? "border-blue-500/20 hover:border-blue-500/30" :
+                        service.gradient.includes("violet") ? "border-violet-500/20 hover:border-violet-500/30" :
+                        "border-orange-500/20 hover:border-orange-500/30"
+                      }
                     `}
                   >
-                    <div className={`absolute inset-0 w-full h-full transition-all duration-300 opacity-0 group-hover/btn:opacity-20 bg-gradient-to-r ${service.gradient}`} />
+                    <div className={`absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r ${service.gradient}`} />
                     <div className="relative z-10 flex items-center justify-center gap-2">
                       Learn More
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
                   </button>
                 </div>

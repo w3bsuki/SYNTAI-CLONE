@@ -50,6 +50,10 @@ const config: Config = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+        sky: {
+          400: 'var(--sky-400)',
+          500: 'var(--sky-500)',
+        },
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
@@ -103,7 +107,8 @@ const config: Config = {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
         'subtle-gradient': 'subtle-gradient 60s ease infinite',
-        'marquee': 'marquee var(--duration) linear infinite'
+        'marquee': 'marquee var(--duration) linear infinite',
+        'marquee-reverse': 'marquee var(--duration) linear infinite reverse'
   		}
   	}
   },

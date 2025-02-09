@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Brain, Mail, MessageSquare } from "lucide-react";
+import { Brain, Mail, MessageSquare, ArrowRight } from "lucide-react";
 import { useAnimate } from "framer-motion";
 import { IconCloud } from "@/components/ui/interactive-icon-cloud";
 
@@ -92,7 +92,7 @@ export function Connect() {
                     vy={-0.2}
                   />
                   <div className="flex items-center justify-center h-full">
-                    <div className="flex flex-col items-center max-w-sm gap-8 py-12">
+                    <div className="flex flex-col items-start max-w-sm gap-8 py-12 px-8">
                       <div
                         className="relative mx-auto h-[160px] w-[240px]"
                         ref={scope}
@@ -145,45 +145,32 @@ export function Connect() {
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-center space-y-4">
-                        <h3 className="text-2xl font-semibold text-white">
-                          Ready to Transform Your Business?
+                      <div className="flex flex-col items-start space-y-4">
+                        <h3 className="text-4xl font-medium tracking-tight text-white">
+                          Ready to Transform Your
+                          <br />
+                          Business?
                         </h3>
-                        <p className="text-sm text-zinc-400 text-center max-w-xs">
+                        <p className="text-base text-zinc-400 max-w-[90%]">
                           Get in touch with us to discuss how our AI solutions can revolutionize your operations
                         </p>
-                        <div className="flex items-center gap-2 pt-2">
-                          <Link href="#contact">
-                            <ButtonColorful
-                              label="Schedule a Demo"
-                              className="h-8"
-                            />
-                          </Link>
-                          <Link
-                            href="mailto:contact@example.com"
-                            target="_blank"
-                            className={cn(
-                              buttonVariants({
-                                variant: "outline",
-                                size: "icon-sm",
-                              }),
-                              "border-zinc-700 text-zinc-300 hover:border-zinc-600 hover:bg-zinc-900 hover:text-zinc-100 h-8 w-8"
-                            )}
+                        <div className="flex items-center gap-4 pt-4">
+                          <button
+                            onClick={() => {}}
+                            className="inline-flex items-center gap-2 px-6 h-10 rounded-lg bg-zinc-900 border border-violet-500/20 text-white text-sm font-medium relative overflow-hidden group"
                           >
-                            <Mail className="h-4 w-4" />
-                          </Link>
-                          <Link
-                            href="#contact"
-                            className={cn(
-                              buttonVariants({
-                                variant: "outline",
-                                size: "icon-sm",
-                              }),
-                              "border-zinc-700 text-zinc-300 hover:border-zinc-600 hover:bg-zinc-900 hover:text-zinc-100 h-8 w-8"
-                            )}
+                            <div className="absolute inset-0 opacity-10 bg-gradient-to-r from-violet-500 to-purple-500" />
+                            <div className="relative z-10 flex items-center gap-2">
+                              Schedule a Demo
+                              <ArrowRight className="w-4 h-4" />
+                            </div>
+                          </button>
+                          <button
+                            onClick={() => {}}
+                            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
                           >
-                            <MessageSquare className="h-3.5 w-3.5" />
-                          </Link>
+                            <MessageSquare className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
                     </div>

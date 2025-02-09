@@ -1,23 +1,20 @@
 "use client";
 
-import { StatusBadge } from "@/components/ui/status-badge";
+import { Badge } from "@/components/ui/badge";
 import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
 import { TextShimmer } from "@/components/ui/text-shimmer";
-import { Info, ArrowRight } from "lucide-react";
+import { Info, ArrowRight, MessageSquare } from "lucide-react";
+import HeroBadge from "@/components/ui/hero-badge";
 
 export default function AboutUs() {
   return (
     <section id="about-us" className="bg-black py-24">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-col items-center gap-4 text-center mb-16">
-          <StatusBadge
-            leftIcon={Info}
-            rightIcon={ArrowRight}
-            leftLabel="About"
-            rightLabel="Us"
-            status="success"
-            color="violet"
-            className="bg-zinc-900/80 backdrop-blur-sm border-zinc-800/50"
+          <HeroBadge 
+            text="About"
+            variant="outline"
+            icon={<Info className="w-4 h-4" />}
           />
           <TextShimmer as="h2" className="max-w-2xl text-4xl font-bold text-white" duration={3}>
             Why Choose Us
@@ -29,6 +26,29 @@ export default function AboutUs() {
 
         <div className="bg-zinc-900/20 border-zinc-800/50 rounded-2xl border">
           <FeaturesSectionWithHoverEffects />
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-2xl font-semibold text-white mb-4">
+              Ready to Transform Your Business?
+            </h3>
+            <p className="text-zinc-400 mb-8">
+              Get in touch with our experts and discover how our AI solutions can drive your business forward.
+            </p>
+            <button
+              onClick={() => {}}
+              className="inline-flex items-center gap-2 px-8 h-12 rounded-xl bg-zinc-900 border border-violet-500/20 text-white font-medium transition-all duration-300 hover:border-violet-500/30 hover:scale-[1.02] relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r from-violet-500 to-purple-500" />
+              <div className="relative z-10 flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Contact Us Now
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </section>

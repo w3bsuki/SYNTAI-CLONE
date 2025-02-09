@@ -43,6 +43,15 @@
     }
   }
 
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
   @property --angle {
     syntax: '<angle>';
     initial-value: 0deg;
@@ -83,6 +92,10 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --sky-400: #38bdf8;
+    --sky-500: #0ea5e9;
+    --gap: 1rem;
+    --duration: 30s;
   }
   .dark {
     --background: 0 0% 0%;
@@ -117,6 +130,8 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --sky-400: #38bdf8;
+    --sky-500: #0ea5e9;
   }
 }
 
@@ -144,5 +159,9 @@
 
   .animate-gradient-x {
     animation: gradient-x 15s ease infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee var(--duration) linear infinite;
   }
 }
