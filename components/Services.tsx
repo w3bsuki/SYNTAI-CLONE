@@ -67,46 +67,46 @@ const featureVariants = {
 const services = [
   {
     title: "AI Consulting",
-    description: "Expert guidance for AI integration, strategic planning, and implementation roadmaps.",
+    description: "Strategic AI integration and transformation roadmaps.",
     icon: Brain,
     gradient: "from-emerald-500 to-green-500",
     features: [
-      "Digital transformation strategy",
       "AI readiness assessment",
-      "Implementation roadmap"
+      "Technology stack optimization",
+      "Implementation strategy"
     ]
   },
   {
     title: "Machine Learning",
-    description: "Custom ML models for predictive analytics, anomaly detection, and process optimization.",
+    description: "State-of-the-art models for intelligent automation and prediction.",
     icon: Cpu,
     gradient: "from-blue-500 to-cyan-500",
     features: [
-      "Predictive maintenance",
-      "Customer behavior modeling",
-      "Process automation"
+      "Real-time predictions",
+      "Automated decision systems",
+      "Performance optimization"
     ]
   },
   {
     title: "Natural Language",
-    description: "Advanced NLP solutions for text analysis, chatbots, and automated communication.",
+    description: "Advanced NLP solutions that understand, analyze, generate.",
     icon: MessageCircle,
     gradient: "from-violet-500 to-purple-500",
     features: [
-      "Customer support automation",
-      "Document analysis",
-      "Sentiment analysis"
+      "Intelligent chatbots",
+      "Semantic analysis",
+      "Multi-language support"
     ]
   },
   {
     title: "Computer Vision",
-    description: "Systems that can 'see' and interpret visual data for automation and analysis.",
+    description: "AI-powered visual intelligence for real-time analysis and automation.",
     icon: Eye,
     gradient: "from-orange-500 to-pink-500",
     features: [
-      "Quality control automation",
-      "Security systems",
-      "Visual inspection"
+      "Object recognition",
+      "Visual inspection",
+      "Scene understanding"
     ]
   }
 ]
@@ -127,7 +127,7 @@ export default function Services() {
 
       <div className="relative z-10 container mx-auto px-4 md:px-6">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -159,120 +159,127 @@ export default function Services() {
           </div>
 
           <p className="mt-6 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
-            Transform your business with our cutting-edge AI services, tailored to meet your specific needs and objectives.
+            Unlock the power of artificial intelligence with our enterprise-grade solutions, expertly crafted to drive innovation and growth.
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid gap-8 sm:gap-10 md:grid-cols-2 max-w-5xl mx-auto"
+          className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto place-items-stretch"
         >
           {services.map((service) => (
             <motion.div
               key={service.title}
               variants={cardVariants}
-              whileHover={{ scale: 1.01 }}
+              whileHover={{ scale: 1.02 }}
               className="group relative w-full"
+              style={{ backfaceVisibility: 'hidden' }}
             >
-              <div className={`relative flex flex-col items-center text-center h-full overflow-hidden rounded-2xl border bg-zinc-900/50 p-6 sm:p-8 ${
-                service.gradient.includes("emerald") ? "border-emerald-500/20" :
-                service.gradient.includes("blue") ? "border-blue-500/20" :
-                service.gradient.includes("violet") ? "border-violet-500/20" :
-                "border-orange-500/20"
-              }`}>
-                {/* Icon */}
-                <motion.div
-                  variants={iconVariants}
-                  initial="initial"
-                  whileHover="hover"
-                  className={`relative inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl border ${
-                    service.gradient.includes("emerald") ? "border-emerald-500/20" :
-                    service.gradient.includes("blue") ? "border-blue-500/20" :
-                    service.gradient.includes("violet") ? "border-violet-500/20" :
-                    "border-orange-500/20"
-                  } bg-zinc-900`}
-                >
-                  <div className={`absolute inset-0 rounded-2xl opacity-20 bg-gradient-to-br ${service.gradient}`} />
-                  <service.icon className="relative z-10 h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                </motion.div>
-
-                {/* Content */}
-                <motion.h3 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="mt-4 text-lg font-semibold text-white"
-                >
-                  {service.title}
-                </motion.h3>
-                <motion.p 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="mt-2 text-sm leading-relaxed text-zinc-400 max-w-[85%] mx-auto"
-                >
-                  {service.description}
-                </motion.p>
-
-                {/* Features */}
-                <div className="mt-5 space-y-2 w-full max-w-[85%]">
-                  {service.features.map((feature) => (
-                    <motion.div 
-                      key={feature}
-                      variants={featureVariants}
-                      initial="initial"
-                      whileHover="hover"
-                      className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border 
-                        bg-zinc-900/50 backdrop-blur-sm ${
-                        service.gradient.includes("emerald") ? "border-emerald-500/10" :
-                        service.gradient.includes("blue") ? "border-blue-500/10" :
-                        service.gradient.includes("violet") ? "border-violet-500/10" :
-                        "border-orange-500/10"
-                      }`}
-                    >
-                      <Cpu className={`h-3.5 w-3.5 shrink-0 ${
-                        service.gradient.includes("emerald") ? "text-emerald-500" :
-                        service.gradient.includes("blue") ? "text-blue-500" :
-                        service.gradient.includes("violet") ? "text-violet-500" :
-                        "text-orange-500"
-                      }`} />
-                      <span className="text-sm font-medium text-zinc-300">{feature}</span>
-                    </motion.div>
-                  ))}
+              {/* Card Container */}
+              <div className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black/80">
+                {/* Spotlight Effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)]" />
+                
+                {/* Glowing Border Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-[0.15]`}>
+                  <div className="absolute inset-[1px] rounded-2xl bg-black/95" />
                 </div>
 
-                {/* Action Button */}
-                <div className="mt-6 w-full max-w-[85%]">
-                  <motion.button
-                    onClick={() => setSelectedService(service)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`
-                      w-full h-10 px-4 rounded-xl
-                      bg-zinc-900 
-                      border text-sm font-medium text-white
-                      relative overflow-hidden group
-                      ${
-                        service.gradient.includes("emerald") ? "border-emerald-500/20" :
-                        service.gradient.includes("blue") ? "border-blue-500/20" :
-                        service.gradient.includes("violet") ? "border-violet-500/20" :
-                        "border-orange-500/20"
-                      }
-                    `}
-                  >
-                    <motion.div 
-                      initial={{ opacity: 0.1 }}
-                      whileHover={{ opacity: 0.2 }}
-                      className={`absolute inset-0 bg-gradient-to-r ${service.gradient}`} 
-                    />
-                    <div className="relative z-10 flex items-center justify-center gap-2">
-                      Learn More
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                {/* Content */}
+                <div className="relative flex flex-col items-center text-center p-6 sm:p-8 h-full">
+                  <div className="flex flex-col items-center flex-1">
+                    {/* Icon */}
+                    <motion.div
+                      variants={iconVariants}
+                      initial="initial"
+                      whileHover="hover"
+                      className="relative"
+                    >
+                      {/* Glowing circle behind icon */}
+                      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-r ${service.gradient} opacity-30 rounded-full blur-sm`} />
+                      
+                      {/* Icon wrapper */}
+                      <div className="relative flex items-center justify-center w-12 h-12 rounded-xl overflow-hidden">
+                        <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-20`} />
+                        <div className="absolute inset-[1px] bg-black rounded-lg" />
+                        <service.icon className={`relative z-10 h-6 w-6 ${
+                          service.gradient.includes("emerald") ? "text-emerald-500" :
+                          service.gradient.includes("blue") ? "text-blue-500" :
+                          service.gradient.includes("violet") ? "text-violet-500" :
+                          "text-orange-500"
+                        }`} />
+                      </div>
+                    </motion.div>
+
+                    {/* Title & Description */}
+                    <motion.h3
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                      className={`mt-4 text-lg font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
+                    >
+                      {service.title}
+                    </motion.h3>
+                    <motion.p 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="mt-2 text-sm leading-relaxed text-zinc-400"
+                    >
+                      {service.description}
+                    </motion.p>
+
+                    {/* Features */}
+                    <div className="mt-6 space-y-2 w-full">
+                      {service.features.map((feature, index) => (
+                        <motion.div 
+                          key={feature}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.4 + index * 0.1 }}
+                          className="relative flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
+                          style={{ backfaceVisibility: 'hidden' }}
+                        >
+                          <div className={`relative z-10 flex items-center justify-center w-5 h-5 rounded-md bg-gradient-to-b ${service.gradient} p-[1px]`}>
+                            <div className="w-full h-full rounded-md bg-black flex items-center justify-center">
+                              <service.icon className={`h-3 w-3 ${
+                                service.gradient.includes("emerald") ? "text-emerald-500" :
+                                service.gradient.includes("blue") ? "text-blue-500" :
+                                service.gradient.includes("violet") ? "text-violet-500" :
+                                "text-orange-500"
+                              }`} />
+                            </div>
+                          </div>
+                          <span className="text-xs font-medium text-zinc-300">
+                            {feature}
+                          </span>
+                        </motion.div>
+                      ))}
                     </div>
-                  </motion.button>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="mt-6 w-full">
+                    <motion.button
+                      onClick={() => setSelectedService(service)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="relative w-full overflow-hidden rounded-lg"
+                      style={{ backfaceVisibility: 'hidden' }}
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient}`} />
+                      <div className="relative flex items-center justify-center gap-2 px-4 py-2">
+                        <span className="text-xs font-semibold text-white">
+                          Learn More
+                        </span>
+                        <ArrowRight className="w-3.5 h-3.5 text-white" />
+                      </div>
+                    </motion.button>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -290,7 +297,7 @@ export default function Services() {
             description: selectedService.description,
             gradient: selectedService.gradient,
             features: selectedService.features,
-            icon: selectedService.icon as any // Type assertion to handle the icon component
+            icon: selectedService.icon
           }}
         />
       )}

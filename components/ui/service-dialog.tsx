@@ -192,130 +192,130 @@ export function ServiceDialog({ isOpen, onClose, service }: ServiceDialogProps) 
 
   const Icon = service.icon;
 
+  // Define color based on service gradient
+  const textColor = service.gradient.includes("emerald") 
+    ? "text-emerald-500"
+    : service.gradient.includes("blue")
+    ? "text-blue-500"
+    : service.gradient.includes("violet")
+    ? "text-violet-500"
+    : "text-orange-500";
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] bg-zinc-950/70 border-zinc-800/50 p-6 gap-0 backdrop-blur-xl">
-        <DialogHeader className="pb-5 mb-6 border-b border-zinc-800/50">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className={`relative rounded-xl p-2.5 overflow-hidden`}>
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-20`} />
-                {Icon && <Icon className="relative z-10 h-5 w-5 text-white" />}
+      <DialogContent className="sm:max-w-[500px] bg-black/90 border-zinc-800/50 p-6 gap-0 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)]" />
+        
+        {/* Glowing Border Effect */}
+        <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-[0.15]`}>
+          <div className="absolute inset-[1px] rounded-2xl bg-black/95" />
+        </div>
+
+        {/* Header */}
+        <DialogHeader className="relative pb-5 mb-6 border-b border-zinc-800/50">
+          <div className="flex flex-col items-center gap-4">
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: 8 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative"
+            >
+              {/* Glowing circle behind icon */}
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-r ${service.gradient} opacity-30 rounded-full blur-sm`} />
+              
+              {/* Icon wrapper */}
+              <div className="relative flex items-center justify-center w-12 h-12 rounded-xl overflow-hidden">
+                <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-20`} />
+                <div className="absolute inset-[1px] bg-black rounded-lg" />
+                {Icon && <Icon className={`relative z-10 h-6 w-6 ${textColor}`} />}
               </div>
-              <div className="flex-1">
-                <DialogTitle className="text-xl font-semibold bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">
-                  {service.name}
-                </DialogTitle>
-                <DialogDescription className="text-sm text-zinc-400 mt-1.5 line-clamp-2">
-                  {service.description}
-                </DialogDescription>
-              </div>
+            </motion.div>
+            <div className="flex flex-col items-center text-center">
+              <DialogTitle className={`text-xl font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}>
+                {service.name}
+              </DialogTitle>
+              <DialogDescription className="text-sm text-zinc-400 mt-1.5 max-w-sm">
+                {service.description}
+              </DialogDescription>
             </div>
-            <Badge variant="outline" className="h-6 shrink-0 px-2.5 py-0.5 border-zinc-800/50 text-zinc-400">
-              Enterprise
-            </Badge>
           </div>
         </DialogHeader>
 
-        <div className="grid grid-cols-2 gap-6">
-          {/* Left Column - Features */}
-          <div className="space-y-5">
-            <div>
-              <h4 className="text-sm font-medium bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent mb-4">Key Features</h4>
-              <div className="space-y-3">
-                {detailedFeatures.map((feature, index) => (
-                  <motion.div
-                    key={feature.title}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group flex items-center gap-3.5 p-3.5 rounded-lg bg-zinc-900/50 border border-zinc-800/50 hover:bg-zinc-900/70 hover:border-zinc-700/50 transition-all duration-200"
-                  >
-                    <div className={`relative flex items-center justify-center shrink-0 rounded-full p-2 overflow-hidden`}>
-                      <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-200`} />
+        {/* Main Content */}
+        <div className="relative space-y-6">
+          {/* Features */}
+          <div className="space-y-3">
+            <h4 className={`text-sm font-medium ${textColor}`}>Key Features</h4>
+            <div className="grid gap-2">
+              {detailedFeatures.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative flex items-center px-3 py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
+                  style={{ backfaceVisibility: 'hidden' }}
+                >
+                  <div className={`relative z-10 flex items-center justify-center w-6 h-6 rounded-md bg-gradient-to-b ${service.gradient} p-[1px]`}>
+                    <div className="w-full h-full rounded-md bg-black flex items-center justify-center">
                       {feature.icon}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h5 className="text-sm font-medium text-zinc-200 group-hover:text-white transition-colors duration-200">{feature.title}</h5>
-                      <p className="text-xs text-zinc-400 mt-0.5 line-clamp-2 leading-relaxed group-hover:text-zinc-300 transition-colors duration-200">{feature.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                  </div>
+                  <span className="relative z-10 text-xs font-medium text-zinc-300 ml-2.5">
+                    {feature.title}
+                  </span>
+                </motion.div>
+              ))}
             </div>
           </div>
 
-          {/* Right Column - Benefits & Pricing */}
-          <div className="space-y-5">
-            {/* Benefits */}
-            <div>
-              <h4 className="text-sm font-medium bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent mb-4">Benefits</h4>
-              <div className="space-y-3 bg-zinc-900/50 rounded-lg p-4 border border-zinc-800/50">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={benefit}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-3 group"
-                  >
-                    <Check className="h-4 w-4 text-emerald-500/70 group-hover:text-emerald-500 transition-colors duration-200 shrink-0" />
-                    <span className="text-xs text-zinc-400 group-hover:text-zinc-300 transition-colors duration-200 leading-relaxed">{benefit}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Pricing */}
-            <div className="rounded-lg border border-zinc-800/50 bg-zinc-900/50 p-4">
-              <div className="flex items-baseline gap-1.5 mb-4">
-                <span className="text-2xl font-bold bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">{pricing.starter.price}</span>
-                <span className="text-xs text-zinc-400">{pricing.starter.period}</span>
-              </div>
-              <div className="space-y-3">
-                {pricing.starter.features.map((feature, index) => (
-                  <motion.div
-                    key={feature}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                    className="flex items-center gap-3 group"
-                  >
-                    <Check className="h-3 w-3 text-emerald-500/70 group-hover:text-emerald-500 transition-colors duration-200 shrink-0" />
-                    <span className="text-xs text-zinc-400 group-hover:text-zinc-300 transition-colors duration-200 leading-relaxed">{feature}</span>
-                  </motion.div>
-                ))}
-              </div>
+          {/* Capabilities */}
+          <div className="space-y-3">
+            <h4 className={`text-sm font-medium ${textColor}`}>Capabilities</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { icon: Zap, text: "Real-time processing" },
+                { icon: Code, text: "API Integration" },
+                { icon: Lock, text: "Enterprise security" },
+                { icon: Sparkles, text: "Advanced AI models" }
+              ].map((item, index) => (
+                <motion.div
+                  key={item.text}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
+                  style={{ backfaceVisibility: 'hidden' }}
+                >
+                  <item.icon className={`h-3.5 w-3.5 ${textColor} shrink-0`} />
+                  <span className="text-xs text-zinc-300">
+                    {item.text}
+                  </span>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="mt-6 pt-5 border-t border-zinc-800/50">
-          <button className={`
-            w-full h-11 px-4 rounded-lg
-            bg-zinc-900/50 
-            border text-sm font-medium text-white
-            relative overflow-hidden group
-            transition-all duration-200
-            hover:border-opacity-50
-            ${service.gradient.includes("emerald") ? "border-emerald-500/20 hover:border-emerald-500/30" :
-              service.gradient.includes("blue") ? "border-blue-500/20 hover:border-blue-500/30" :
-              service.gradient.includes("violet") ? "border-violet-500/20 hover:border-violet-500/30" :
-              "border-orange-500/20 hover:border-orange-500/30"
-            }
-          `}>
-            <motion.div 
-              initial={{ opacity: 0.1 }}
-              whileHover={{ opacity: 0.15 }}
-              transition={{ duration: 0.2 }}
-              className={`absolute inset-0 bg-gradient-to-br ${service.gradient}`} 
-            />
-            <div className="relative z-10 flex items-center justify-center gap-2">
-              Get Started
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" />
+        <div className="relative mt-6 pt-5 border-t border-zinc-800/50">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative w-full overflow-hidden rounded-lg"
+            style={{ backfaceVisibility: 'hidden' }}
+          >
+            <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient}`} />
+            <div className="relative flex items-center justify-center gap-2 px-4 py-2">
+              <span className="text-xs font-semibold text-white">
+                Get Started
+              </span>
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
             </div>
-          </button>
+          </motion.button>
         </div>
       </DialogContent>
     </Dialog>

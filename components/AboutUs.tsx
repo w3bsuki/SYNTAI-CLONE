@@ -18,10 +18,10 @@ export default function AboutUs() {
             icon={<Info className="w-4 h-4" />}
           />
           <TextShimmer as="h2" className="max-w-2xl text-4xl font-bold text-white" duration={3}>
-            Why Choose Us
+            Our Process
           </TextShimmer>
           <p className="text-zinc-400 max-w-2xl">
-            Discover what makes us the leading choice for AI solutions and how we can transform your business operations.
+            From discovery to deployment, we guide you through every step of your AI transformation journey.
           </p>
         </div>
 
