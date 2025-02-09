@@ -4,17 +4,51 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
-const navigationItems = [
-  { name: "SOLUTIONS", href: "#services" },
-  { name: "AGENTS", href: "#agents" },
-  { name: "ABOUT", href: "#about" },
+const buttonVariants = {
+  initial: { 
+    scale: 1,
+    backgroundColor: "rgb(255, 255, 255)"
+  },
+  hover: { 
+    scale: 1.01,
+    backgroundColor: "rgb(255, 255, 255, 0.9)",
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 25
+    }
+  },
+  tap: {
+    scale: 0.98
+  }
+};
+
+const arrowVariants = {
+  initial: { x: 0 },
+  hover: { 
+    x: 4,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 25
+    }
+  }
+};
+
+interface NavigationItem {
+  name: string;
+  href: string;
+  isHighlighted?: boolean;
+}
+
+const navigationItems: NavigationItem[] = [
+  { name: "Solutions", href: "#services" },
+  { name: "Agents", href: "#agents", isHighlighted: true },
+  { name: "About", href: "#why-choose-us" },
 ];
 
 export default function Header() {
@@ -56,96 +90,147 @@ export default function Header() {
     <header 
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-black border-b border-zinc-800/50" : "bg-black"
+        "border-b border-zinc-800/50 bg-black/50 backdrop-blur-lg",
+        isScrolled && "bg-black/80"
       )}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <nav className="flex h-16 items-center justify-between max-w-[1400px] mx-auto">
-          {/* Logo */}
-          <div className="flex-1 basis-0">
-            <Link 
-              href="/" 
-              className="flex items-center"
-            >
-              <span className="text-lg font-bold tracking-tight text-white">
-                SYNTAI
-              </span>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center justify-center gap-12">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  "text-sm font-medium transition-colors duration-200",
-                  "hover:text-white",
-                  activeSection === item.href.substring(1) ? "text-white" : "text-zinc-300"
-                )}
+      <div className="relative mx-auto w-full">
+        <div className="mx-auto max-w-[1400px] px-6">
+          <nav className="flex h-24 items-center">
+            <div className="flex w-full items-center justify-between gap-8">
+              {/* Logo - Left */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex w-[180px]"
               >
-                {item.name}
-              </Link>
-            ))}
-          </div>
+                <Link 
+                  href="/" 
+                  className="flex items-center gap-2 group"
+                >
+                  <span className="text-2xl font-bold tracking-tight text-white transition-colors duration-200 group-hover:text-zinc-300">
+                    Synt AI
+                  </span>
+                </Link>
+              </motion.div>
 
-          {/* Book a Demo Button */}
-          <div className="hidden md:flex items-center justify-end flex-1 basis-0">
-            <Button
-              onClick={() => window.location.href = '#contact'}
-              className="text-sm font-medium text-white bg-transparent hover:bg-zinc-800 border border-zinc-800 px-4 h-8 rounded-lg transition-all duration-200"
-            >
-              Book a Demo
-            </Button>
-          </div>
+              {/* Navigation - Center */}
+              <div className="hidden flex-1 md:flex items-center justify-center">
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-20"
+                >
+                  {navigationItems.map((item) => (
+                    <motion.div
+                      key={item.name}
+                      whileHover={{ y: -2 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    >
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "group relative py-2",
+                          "text-[15px] font-medium tracking-wide transition-all duration-200",
+                          item.isHighlighted 
+                            ? "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent hover:opacity-80" 
+                            : "text-zinc-300 hover:text-white",
+                          activeSection === item.href.substring(1) && "text-white"
+                        )}
+                      >
+                        {item.name}
+                        <span className={cn(
+                          "absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent",
+                          "opacity-0 transition-all duration-300 group-hover:opacity-100",
+                          activeSection === item.href.substring(1) && "opacity-100"
+                        )} />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="relative text-zinc-400 hover:text-white"
+              {/* CTA Button - Right */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex w-[180px] justify-end"
+              >
+                <div className="hidden md:block">
+                  <Link href="/#contact">
+                    <RainbowButton className="flex items-center gap-2">
+                      <span className="relative z-10">Contact Us</span>
+                      <ArrowRight className="relative z-10 w-4 h-4" />
+                    </RainbowButton>
+                  </Link>
+                </div>
+
+                {/* Mobile Menu Button */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="inline-flex items-center justify-center p-2.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors md:hidden"
                 >
                   {isOpen ? (
-                    <X className="h-5 w-5" />
+                    <X className="h-6 w-6" />
                   ) : (
-                    <Menu className="h-5 w-5" />
+                    <Menu className="h-6 w-6" />
                   )}
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-full border-l border-zinc-800/50 bg-black px-6 py-8"
-              >
-                <div className="flex flex-col space-y-6">
+                </motion.button>
+              </motion.div>
+            </div>
+          </nav>
+        </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="absolute top-full left-0 right-0 bg-black/95 backdrop-blur-lg border-b border-zinc-800/50 md:hidden"
+          >
+            <div className="mx-auto max-w-[1400px] px-6">
+              <div className="py-8">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ staggerChildren: 0.1, delayChildren: 0.1 }}
+                  className="flex flex-col gap-6"
+                >
                   {navigationItems.map((item) => (
-                    <Link
+                    <motion.div
                       key={item.name}
-                      href={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className="text-lg text-zinc-300 hover:text-white transition-colors duration-200"
+                      whileHover={{ x: 4 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     >
-                      {item.name}
-                    </Link>
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          "text-base font-medium tracking-wide transition-colors duration-200 py-2",
+                          item.isHighlighted 
+                            ? "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent hover:opacity-80" 
+                            : "text-zinc-300 hover:text-white"
+                        )}
+                      >
+                        {item.name}
+                      </Link>
+                    </motion.div>
                   ))}
-                  <Button
-                    onClick={() => {
-                      window.location.href = '#contact';
-                      setIsOpen(false);
-                    }}
-                    className="text-sm font-medium text-white bg-transparent hover:bg-zinc-800 border border-zinc-800 px-4 h-8 rounded-lg transition-all duration-200"
-                  >
-                    Book a Demo
-                  </Button>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </nav>
+                  <Link href="/#contact" onClick={() => setIsOpen(false)}>
+                    <RainbowButton className="flex w-full items-center justify-center gap-2">
+                      <span className="relative z-10">Contact Us</span>
+                      <ArrowRight className="relative z-10 w-4 h-4" />
+                    </RainbowButton>
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
     </header>
   );

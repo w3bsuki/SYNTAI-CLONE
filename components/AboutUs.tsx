@@ -5,6 +5,7 @@ import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { Info, ArrowRight, MessageSquare } from "lucide-react";
 import HeroBadge from "@/components/ui/hero-badge";
+import { motion } from "framer-motion";
 
 export default function AboutUs() {
   return (
@@ -37,17 +38,18 @@ export default function AboutUs() {
             <p className="text-zinc-400 mb-8">
               Get in touch with our experts and discover how our AI solutions can drive your business forward.
             </p>
-            <button
-              onClick={() => {}}
-              className="inline-flex items-center gap-2 px-8 h-12 rounded-xl bg-zinc-900 border border-violet-500/20 text-white font-medium transition-all duration-300 hover:border-violet-500/30 hover:scale-[1.02] relative overflow-hidden group"
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center gap-2 px-8 h-12 rounded-xl bg-zinc-900/50 border border-blue-500/20 text-white font-medium relative overflow-hidden group"
             >
-              <div className="absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r from-violet-500 to-purple-500" />
+              <div className="absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600" />
               <div className="relative z-10 flex items-center gap-2">
                 <MessageSquare className="w-4 h-4" />
                 Contact Us Now
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </div>
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>

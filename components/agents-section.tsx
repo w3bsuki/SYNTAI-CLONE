@@ -1,18 +1,75 @@
 "use client";
 
-import { Brain, Bot, Sparkles, Cpu, Shield, Rocket, Clock, ArrowRight, Boxes, MessagesSquare, BarChart3 } from "lucide-react";
+import { Brain, Bot, Shield, Rocket, Clock, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { ButtonColorful } from "@/components/ui/button-colorful";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Typewriter } from "@/components/ui/typewriter";
 import HeroBadge from "@/components/ui/hero-badge";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { AgentDialog } from "@/components/ui/agent-dialog";
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    }
+  }
+};
+
+const iconVariants = {
+  initial: { scale: 1, rotate: 0 },
+  hover: { 
+    scale: 1.05, 
+    rotate: 8,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 20
+    }
+  }
+};
+
+const featureVariants = {
+  initial: { 
+    opacity: 0.9,
+    backgroundColor: "rgba(24, 24, 27, 0.5)",
+    borderColor: "rgba(39, 39, 42, 0.5)"
+  },
+  hover: { 
+    opacity: 1,
+    backgroundColor: "rgba(24, 24, 27, 0.8)",
+    borderColor: "rgba(59, 130, 246, 0.2)",
+    transition: {
+      type: "tween",
+      duration: 0.2
+    }
+  }
+};
 
 const agents = [
   {
-    name: "Data Processing AI",
-    description: "Automate complex data processes",
-    poweredBy: "Powered by Aido",
-    icon: Boxes,
+    name: "AIDO",
+    description: "Data Processing AI",
+    icon: Bot,
     gradient: "from-blue-500 to-cyan-500",
     features: ["Document Analysis", "Data Extraction", "Automated Processing", "Format Conversion"],
     status: {
@@ -26,10 +83,9 @@ const agents = [
     buttonText: "Explore Aido"
   },
   {
-    name: "Customer Service AI",
-    description: "24/7 Phone & Text Service",
-    poweredBy: "Powered by Aidy",
-    icon: MessagesSquare,
+    name: "AIDY",
+    description: "Customer Service AI",
+    icon: Bot,
     gradient: "from-violet-500 to-purple-500",
     features: ["24/7 Support", "Multi-language", "Smart Responses", "Issue Resolution"],
     status: {
@@ -43,10 +99,9 @@ const agents = [
     buttonText: "Explore Aidy"
   },
   {
-    name: "Business Intelligence AI",
-    description: "Advanced Analytics and Predictions",
-    poweredBy: "Powered by Aidr",
-    icon: BarChart3,
+    name: "AIDR",
+    description: "Business Intelligence AI",
+    icon: Bot,
     gradient: "from-orange-500 to-pink-500",
     features: ["Predictive Analytics", "Market Analysis", "Trend Detection", "Report Generation"],
     status: {
@@ -62,6 +117,8 @@ const agents = [
 ];
 
 export default function AgentsSection() {
+  const [selectedAgent, setSelectedAgent] = useState<typeof agents[0] | null>(null);
+  
   const agentTitles = [
     "AI Agents",
     "Meet AIDR",
@@ -75,9 +132,14 @@ export default function AgentsSection() {
       <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_50%_50%,rgba(24,24,27,0.5),rgba(0,0,0,1))]" />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
 
-      <div className="relative z-10 container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto max-w-[90%] sm:max-w-2xl text-center mb-12 sm:mb-16 md:mb-24">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-[90%] sm:max-w-2xl text-center mb-12 sm:mb-16 md:mb-24"
+        >
           <HeroBadge 
             text="Agents"
             variant="outline"
@@ -104,112 +166,154 @@ export default function AgentsSection() {
           <p className="mt-6 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
             Our suite of specialized AI agents is designed to handle complex business tasks with unprecedented efficiency and accuracy.
           </p>
-        </div>
+        </motion.div>
 
         {/* Agents Grid */}
-        <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-[90%] mx-auto">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto"
+        >
           {agents.map((agent) => (
-            <div
+            <motion.div
               key={agent.name}
+              variants={cardVariants}
+              whileHover={{ scale: 1.01 }}
               className="group relative"
             >
-              <div className={`relative flex flex-col items-center text-center h-full overflow-hidden rounded-2xl border bg-zinc-900/50 p-6 sm:p-8 transition-all duration-300 hover:bg-zinc-900/80 hover:scale-[1.02] hover:shadow-lg ${
-                agent.gradient.includes("blue") ? "border-blue-500/20 hover:border-blue-500/30" :
-                agent.gradient.includes("violet") ? "border-violet-500/20 hover:border-violet-500/30" :
-                "border-orange-500/20 hover:border-orange-500/30"
+              <div className={`relative flex flex-col items-center text-center h-full overflow-hidden rounded-2xl border bg-zinc-900/50 p-8 ${
+                agent.gradient.includes("blue") ? "border-blue-500/20" :
+                agent.gradient.includes("violet") ? "border-violet-500/20" :
+                "border-orange-500/20"
               }`}>
                 {/* Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-900/50 pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-300`} />
+                <motion.div 
+                  initial={{ opacity: 0.5 }}
+                  whileHover={{ opacity: 0.7 }}
+                  transition={{ duration: 0.2 }}
+                  className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-zinc-900/50 pointer-events-none`} 
+                />
                 
                 {/* Icon */}
-                <div className={`relative inline-flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border transition-all duration-300 group-hover:scale-110 ${
-                  agent.gradient.includes("blue") ? "border-blue-500/20 group-hover:border-blue-500/30" :
-                  agent.gradient.includes("violet") ? "border-violet-500/20 group-hover:border-violet-500/30" :
-                  "border-orange-500/20 group-hover:border-orange-500/30"
-                } bg-zinc-900`}>
-                  <div className={`absolute inset-0 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-300 bg-gradient-to-br ${agent.gradient}`} />
-                  <agent.icon className="relative z-10 h-7 w-7 sm:h-8 sm:w-8 text-white transition-transform duration-300 group-hover:scale-110" />
-                </div>
+                <motion.div
+                  variants={iconVariants}
+                  initial="initial"
+                  whileHover="hover"
+                  className={`relative inline-flex h-16 w-16 items-center justify-center rounded-2xl border ${
+                    agent.gradient.includes("blue") ? "border-blue-500/20" :
+                    agent.gradient.includes("violet") ? "border-violet-500/20" :
+                    "border-orange-500/20"
+                  } bg-zinc-900`}
+                >
+                  <div className={`absolute inset-0 rounded-2xl opacity-20 bg-gradient-to-br ${agent.gradient}`} />
+                  <agent.icon className={`relative z-10 h-8 w-8 ${
+                    agent.gradient.includes("blue") ? "text-blue-400" :
+                    agent.gradient.includes("violet") ? "text-violet-400" :
+                    "text-orange-400"
+                  }`} />
+                </motion.div>
 
-                {/* Online Badge */}
-                <div className="mt-4">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/20">
+                {/* Badge */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="mt-6"
+                >
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/80 backdrop-blur-sm border border-zinc-800/50">
                     <span className="relative flex h-2 w-2">
                       <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                     </span>
-                    <span className="text-sm font-medium text-emerald-500">Online</span>
-                  </span>
-                </div>
+                    <span className="text-sm font-medium text-emerald-500">Available</span>
+                  </div>
+                </motion.div>
 
-                {/* Content */}
-                <h3 className="mt-4 sm:mt-6 text-lg sm:text-xl font-semibold text-white transition-colors duration-300 group-hover:text-zinc-100">
+                {/* Title & Description */}
+                <motion.h3 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-6 text-xl font-semibold text-white"
+                >
                   {agent.name}
-                </h3>
-
-                <p className="mt-2 sm:mt-3 text-sm leading-relaxed text-zinc-400 max-w-[90%] mx-auto transition-colors duration-300 group-hover:text-zinc-300">
+                </motion.h3>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="mt-2 text-sm text-zinc-400"
+                >
                   {agent.description}
-                </p>
+                </motion.p>
 
-                {/* Features */}
-                <div className="mt-5 sm:mt-6 space-y-2 w-full">
-                  {agent.features.map((feature) => (
-                    <div 
-                      key={feature} 
-                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all duration-300 
-                        border-zinc-800/50 bg-zinc-900/50 backdrop-blur-sm
-                        group-hover:bg-zinc-900 group-hover:border-zinc-700/50
-                        ${
-                          agent.gradient.includes("blue") ? "hover:border-blue-500/20" :
-                          agent.gradient.includes("violet") ? "hover:border-violet-500/20" :
-                          "hover:border-orange-500/20"
-                        }`}
+                {/* Features Grid */}
+                <div className="mt-8 grid grid-cols-1 gap-3 w-full">
+                  {agent.features.map((feature, index) => (
+                    <motion.div 
+                      key={feature}
+                      variants={featureVariants}
+                      initial="initial"
+                      whileHover="hover"
+                      className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border 
+                        border-zinc-800/50 bg-zinc-900/50 backdrop-blur-sm`}
                     >
-                      <Cpu className={`h-3.5 w-3.5 shrink-0 transition-colors duration-300 ${
-                        agent.gradient.includes("blue") ? "text-blue-500 group-hover:text-blue-400" :
-                        agent.gradient.includes("violet") ? "text-violet-500 group-hover:text-violet-400" :
-                        "text-orange-500 group-hover:text-orange-400"
+                      <Bot className={`h-4 w-4 shrink-0 ${
+                        agent.gradient.includes("blue") ? "text-blue-500" :
+                        agent.gradient.includes("violet") ? "text-violet-500" :
+                        "text-orange-500"
                       }`} />
-                      <span className="text-sm font-medium text-zinc-300 transition-colors duration-300 group-hover:text-zinc-200">{feature}</span>
-                    </div>
+                      <span className="text-sm font-medium text-zinc-300">
+                        {feature}
+                      </span>
+                    </motion.div>
                   ))}
                 </div>
 
                 {/* Action Button */}
-                <div className="mt-6 sm:mt-8 w-full">
-                  <button
-                    onClick={() => {}}
+                <div className="mt-8 w-full">
+                  <motion.button
+                    onClick={() => setSelectedAgent(agent)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     className={`
-                      w-full h-10 sm:h-11 px-4 rounded-xl
+                      w-full h-11 px-4 rounded-xl
                       bg-zinc-900 
                       border text-sm font-medium text-white
                       relative overflow-hidden
-                      transition-all duration-300
-                      hover:scale-[1.02]
                       ${
-                        agent.gradient.includes("blue") ? "border-blue-500/20 hover:border-blue-500/30" :
-                        agent.gradient.includes("violet") ? "border-violet-500/20 hover:border-violet-500/30" :
-                        "border-orange-500/20 hover:border-orange-500/30"
+                        agent.gradient.includes("blue") ? "border-blue-500/20" :
+                        agent.gradient.includes("violet") ? "border-violet-500/20" :
+                        "border-orange-500/20"
                       }
                     `}
                   >
-                    <div className={`absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r ${agent.gradient}`} />
+                    <motion.div 
+                      initial={{ opacity: 0.1 }}
+                      whileHover={{ opacity: 0.2 }}
+                      className={`absolute inset-0 bg-gradient-to-r ${agent.gradient}`} 
+                    />
                     <div className="relative z-10 flex items-center justify-center gap-2">
                       {agent.buttonText}
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4" />
                     </div>
-                  </button>
+                  </motion.button>
                 </div>
-
-                {/* Powered by text - moved to bottom */}
-                <p className="text-sm text-zinc-500 mt-4 opacity-80">
-                  {agent.poweredBy}
-                </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
+
+      {/* Agent Dialog */}
+      {selectedAgent && (
+        <AgentDialog
+          isOpen={!!selectedAgent}
+          onClose={() => setSelectedAgent(null)}
+          agent={selectedAgent}
+        />
+      )}
     </section>
   );
 }

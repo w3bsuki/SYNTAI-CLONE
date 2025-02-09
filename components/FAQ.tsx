@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
+import { HelpCircle } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HighlightGroup, HighlighterItem } from "@/components/ui/particle-effects";
+import HeroBadge from "@/components/ui/hero-badge";
 
 const faqs = [
   {
@@ -33,7 +34,7 @@ const faqs = [
   {
     question: "What is your pricing model?",
     answer:
-      "We offer flexible, scalable pricing plans tailored to your specific needs. Our pricing is transparent and based on factors such as usage volume, features required, and level of support needed. Contact us for a detailed quote customized to your requirements.",
+      "We offer flexible, transparent pricing models tailored to your needs. Our plans range from pay-as-you-go to enterprise-level subscriptions, ensuring you only pay for the features and capacity you use. Contact us for a customized quote based on your specific requirements.",
   },
   {
     question: "How long does implementation typically take?",
@@ -47,9 +48,12 @@ export default function FAQ() {
     <section id="faq" className="bg-black py-24">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-col items-center gap-4 text-center mb-16">
-          <Badge variant="outline" className="bg-black text-zinc-300 border-zinc-800">
-            FAQ
-          </Badge>
+          <HeroBadge 
+            text="FAQ"
+            variant="outline"
+            color="orange"
+            icon={<HelpCircle className="w-4 h-4" />}
+          />
           <h2 className="max-w-2xl text-4xl font-bold text-white">
             Frequently Asked Questions
           </h2>

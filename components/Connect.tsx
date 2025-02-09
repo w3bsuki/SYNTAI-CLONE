@@ -157,19 +157,14 @@ export function Connect() {
                         <div className="flex items-center gap-4 pt-4">
                           <button
                             onClick={() => {}}
-                            className="inline-flex items-center gap-2 px-6 h-10 rounded-lg bg-zinc-900 border border-violet-500/20 text-white text-sm font-medium relative overflow-hidden group"
+                            className="inline-flex items-center gap-2 px-8 h-12 rounded-xl bg-zinc-900/50 border border-blue-500/20 text-white font-medium transition-all duration-300 hover:border-blue-500/30 hover:scale-[1.02] relative overflow-hidden group"
                           >
-                            <div className="absolute inset-0 opacity-10 bg-gradient-to-r from-violet-500 to-purple-500" />
+                            <div className="absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600" />
                             <div className="relative z-10 flex items-center gap-2">
-                              Schedule a Demo
-                              <ArrowRight className="w-4 h-4" />
+                              <MessageSquare className="w-4 h-4" />
+                              Contact Us Now
+                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                             </div>
-                          </button>
-                          <button
-                            onClick={() => {}}
-                            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
-                          >
-                            <MessageSquare className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
