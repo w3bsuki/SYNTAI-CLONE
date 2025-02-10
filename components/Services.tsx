@@ -1,6 +1,6 @@
 "use client"
 
-import { Brain, Cpu, MessageCircle, Eye, ArrowRight } from "lucide-react"
+import { Brain, Cpu, MessageCircle, Eye, ArrowRight, Sparkles } from "lucide-react"
 import { TextShimmer } from "@/components/ui/text-shimmer"
 import { Typewriter } from "@/components/ui/typewriter"
 import HeroBadge from "@/components/ui/hero-badge"
@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { ServiceDialog } from "@/components/ui/service-dialog"
+import { CustomOrderDialog } from "@/components/ui/custom-order-dialog"
 
 // Animation variants
 const containerVariants = {
@@ -100,7 +101,7 @@ const services = [
   },
   {
     title: "Computer Vision",
-    description: "AI-powered visual intelligence for real-time analysis and automation.",
+    description: "AI-powered visual intelligence for real-time analysis.",
     icon: Eye,
     gradient: "from-orange-500 to-pink-500",
     features: [
@@ -113,6 +114,7 @@ const services = [
 
 export default function Services() {
   const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
+  const [isCustomOrderOpen, setIsCustomOrderOpen] = useState(false);
   const sectorTypes = [
     { prefix: "Business", suffix: "", prefixColor: "bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent", suffixColor: "" },
     { prefix: "Enterprise", suffix: "", prefixColor: "bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent", suffixColor: "" },
@@ -174,116 +176,162 @@ export default function Services() {
             <motion.div
               key={service.title}
               variants={cardVariants}
-              whileHover={{ scale: 1.02 }}
               className="group relative w-full max-w-[95%] xs:max-w-sm mx-auto"
               style={{ backfaceVisibility: 'hidden' }}
             >
               {/* Card Container */}
-              <div className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black/80">
-                {/* Spotlight Effect */}
+              <div 
+                onClick={() => setSelectedService(service)}
+                className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black/80 cursor-pointer border border-[1px]"
+                style={{
+                  borderColor: service.gradient.includes("emerald") ? "rgba(16, 185, 129, 0.2)" :
+                             service.gradient.includes("blue") ? "rgba(59, 130, 246, 0.2)" :
+                             service.gradient.includes("violet") ? "rgba(139, 92, 246, 0.2)" :
+                             "rgba(249, 115, 22, 0.2)",
+                  borderWidth: "1px"
+                }}
+              >
+                {/* Background Elements */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80" />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)]" />
+                <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-[0.07]`} />
                 
                 {/* Glowing Border Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-[0.15]`}>
-                  <div className="absolute inset-[1px] rounded-2xl bg-black/95" />
+                <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-90`}>
+                  <div className="absolute inset-[1px] rounded-2xl bg-black" />
                 </div>
-
+                
                 {/* Content */}
-                <div className="relative flex flex-col items-center text-center p-4 sm:p-6 sm:p-8 h-full">
-                  <div className="flex flex-col items-center flex-1">
-                    {/* Icon */}
-                    <motion.div
-                      variants={iconVariants}
-                      initial="initial"
-                      whileHover="hover"
-                      className="relative"
-                    >
-                      {/* Glowing circle behind icon */}
-                      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-r ${service.gradient} opacity-30 rounded-full blur-sm`} />
-                      
-                      {/* Icon wrapper */}
-                      <div className="relative flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 rounded-xl overflow-hidden">
-                        <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-20`} />
-                        <div className="absolute inset-[1px] bg-black rounded-lg" />
-                        <service.icon className={`relative z-10 h-5 w-5 sm:h-6 sm:w-6 ${
-                          service.gradient.includes("emerald") ? "text-emerald-500" :
-                          service.gradient.includes("blue") ? "text-blue-500" :
-                          service.gradient.includes("violet") ? "text-violet-500" :
-                          "text-orange-500"
-                        }`} />
-                      </div>
-                    </motion.div>
-
-                    {/* Title & Description */}
-                    <motion.h3
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                      className={`mt-3 sm:mt-4 text-lg sm:text-xl font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
-                    >
-                      {service.title}
-                    </motion.h3>
-                    <motion.p 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                      className="mt-1 sm:mt-2 text-xs sm:text-sm leading-relaxed text-zinc-400"
-                    >
-                      {service.description}
-                    </motion.p>
-
-                    {/* Features */}
-                    <div className="mt-4 sm:mt-6 space-y-1.5 sm:space-y-2 w-full">
-                      {service.features.map((feature, index) => (
-                        <motion.div 
-                          key={feature}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.4 + index * 0.1 }}
-                          className="relative flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
-                          style={{ backfaceVisibility: 'hidden' }}
-                        >
-                          <div className={`relative z-10 flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-gradient-to-b ${service.gradient} p-[1px]`}>
-                            <div className="w-full h-full rounded-md bg-black flex items-center justify-center">
-                              <service.icon className={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${
-                                service.gradient.includes("emerald") ? "text-emerald-500" :
-                                service.gradient.includes("blue") ? "text-blue-500" :
-                                service.gradient.includes("violet") ? "text-violet-500" :
-                                "text-orange-500"
-                              }`} />
-                            </div>
-                          </div>
-                          <span className="text-[10px] sm:text-xs font-medium text-zinc-300">
-                            {feature}
-                          </span>
-                        </motion.div>
-                      ))}
+                <div className="relative flex flex-col h-full p-4 sm:p-5">
+                  {/* Icon Container */}
+                  <div className="flex justify-center mb-4">
+                    <div className="relative w-[44px] h-[44px] rounded-lg bg-black/80 border border-zinc-800/50">
+                      <service.icon className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 ${
+                        service.gradient.includes("emerald") ? "text-emerald-500" :
+                        service.gradient.includes("blue") ? "text-blue-500" :
+                        service.gradient.includes("violet") ? "text-violet-500" :
+                        "text-orange-500"
+                      }`} />
                     </div>
                   </div>
 
-                  {/* Action Button */}
-                  <div className="mt-4 sm:mt-6 w-full">
+                  {/* Title */}
+                  <h3 className={`text-lg font-semibold text-center mb-2 bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}>
+                    {service.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-zinc-400 text-center mb-4">
+                    {service.description}
+                  </p>
+
+                  {/* Features List */}
+                  <div className="space-y-2 flex-grow">
+                    {service.features.map((feature, index) => (
+                      <div
+                        key={feature}
+                        className={`flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-black/80 border ${
+                          service.gradient.includes("emerald") ? "border-emerald-500/20" :
+                          service.gradient.includes("blue") ? "border-blue-500/20" :
+                          service.gradient.includes("violet") ? "border-violet-500/20" :
+                          "border-orange-500/20"
+                        } ring-1 ${
+                          service.gradient.includes("emerald") ? "ring-emerald-500/10" :
+                          service.gradient.includes("blue") ? "ring-blue-500/10" :
+                          service.gradient.includes("violet") ? "ring-violet-500/10" :
+                          "ring-orange-500/10"
+                        }`}
+                      >
+                        <div className={`flex items-center justify-center w-7 h-7 rounded-lg bg-black/90 border ${
+                          service.gradient.includes("emerald") ? "border-emerald-500/20" :
+                          service.gradient.includes("blue") ? "border-blue-500/20" :
+                          service.gradient.includes("violet") ? "border-violet-500/20" :
+                          "border-orange-500/20"
+                        }`}>
+                          <service.icon className={`w-3.5 h-3.5 ${
+                            service.gradient.includes("emerald") ? "text-emerald-500" :
+                            service.gradient.includes("blue") ? "text-blue-500" :
+                            service.gradient.includes("violet") ? "text-violet-500" :
+                            "text-orange-500"
+                          }`} />
+                        </div>
+                        <span className="text-sm font-medium text-zinc-300">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Learn More Button */}
+                  <div className="mt-4">
                     <motion.button
-                      onClick={() => setSelectedService(service)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="relative w-full overflow-hidden rounded-lg"
-                      style={{ backfaceVisibility: 'hidden' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedService(service);
+                      }}
+                      className={`w-full px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm font-medium text-white bg-gradient-to-r ${service.gradient} hover:opacity-90 transition-opacity`}
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient}`} />
-                      <div className="relative flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2">
-                        <span className="text-[10px] sm:text-xs font-semibold text-white">
-                          Learn More
-                        </span>
-                        <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                      </div>
+                      Learn More
+                      <motion.div
+                        whileHover={{ x: 4 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      >
+                        <ArrowRight className="w-4 h-4" />
+                      </motion.div>
                     </motion.button>
                   </div>
                 </div>
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Custom Order Card */}
+        <motion.div
+          variants={cardVariants}
+          className="mt-6 w-full max-w-5xl mx-auto"
+        >
+          <div className="relative overflow-hidden rounded-2xl bg-black/80 max-w-[95%] xs:max-w-sm mx-auto md:max-w-none">
+            {/* Background Elements */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 opacity-[0.07]" />
+            
+            {/* Glowing Border Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 opacity-90">
+              <div className="absolute inset-[1px] rounded-2xl bg-black" />
+            </div>
+
+            {/* Content */}
+            <div className="relative flex flex-col md:flex-row items-center justify-between p-4 sm:p-5 gap-4">
+              <div className="flex items-center gap-4">
+                <div className="relative w-[44px] h-[44px] rounded-lg bg-black/80 border border-zinc-800/50">
+                  <Sparkles className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-violet-500" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+                    Custom Order
+                  </h3>
+                  <p className="text-sm text-zinc-400">
+                    Need a specific AI solution? Let's build it together.
+                  </p>
+                </div>
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setIsCustomOrderOpen(true)}
+                className="shrink-0 px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm font-medium text-white bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 hover:opacity-90 transition-opacity min-w-[140px]"
+              >
+                Get Started
+                <motion.div
+                  whileHover={{ x: 4 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </motion.div>
+              </motion.button>
+            </div>
+          </div>
         </motion.div>
       </div>
 
@@ -301,6 +349,12 @@ export default function Services() {
           }}
         />
       )}
+
+      {/* Custom Order Dialog */}
+      <CustomOrderDialog
+        isOpen={isCustomOrderOpen}
+        onClose={() => setIsCustomOrderOpen(false)}
+      />
     </section>
   )
 }
