@@ -5,34 +5,11 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Brain, Mail, MessageSquare, ArrowRight } from "lucide-react";
 import { useAnimate } from "framer-motion";
-import { IconCloud } from "@/components/ui/interactive-icon-cloud";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ButtonColorful } from "@/components/ui/button-colorful";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
-
-const techIcons = [
-  "tensorflow",
-  "pytorch",
-  "python",
-  "openai",
-  "amazonaws",
-  "googlecloud",
-  "microsoftazure",
-  "docker",
-  "kubernetes",
-  "postgresql",
-  "mongodb",
-  "redis",
-  "kafka",
-  "rabbitmq",
-  "elasticsearch",
-  "prometheus",
-  "grafana",
-  "nginx",
-  "linux",
-  "git",
-];
 
 export function Connect() {
   const [scope, animate] = useAnimate();
@@ -79,8 +56,8 @@ export function Connect() {
   return (
     <section id="contact" className="bg-black py-16">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
-          {/* Contact Form Side */}
+        <div className="max-w-5xl mx-auto">
+          {/* Contact Form */}
           <HighlightGroup className="group h-full">
             <div className="group/item h-full" data-aos="fade-down">
               <HighlighterItem className="rounded-3xl p-4 h-full">
@@ -92,9 +69,9 @@ export function Connect() {
                     vy={-0.2}
                   />
                   <div className="flex items-center justify-center h-full">
-                    <div className="flex flex-col items-start max-w-sm gap-8 py-12 px-8">
+                    <div className="flex flex-col md:flex-row items-center justify-between w-full gap-8 py-12 px-8">
                       <div
-                        className="relative mx-auto h-[160px] w-[240px]"
+                        className="relative h-[160px] w-[240px] shrink-0"
                         ref={scope}
                       >
                         <Brain className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 text-zinc-400" />
@@ -145,50 +122,26 @@ export function Connect() {
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-start space-y-4">
-                        <h3 className="text-4xl font-medium tracking-tight text-white">
+                      <div className="flex flex-col items-center md:items-start space-y-4 flex-1">
+                        <h3 className="text-4xl font-medium tracking-tight text-white text-center md:text-left">
                           Ready to Transform Your
                           <br />
                           Business?
                         </h3>
-                        <p className="text-base text-zinc-400 max-w-[90%]">
+                        <p className="text-base text-zinc-400 max-w-[90%] text-center md:text-left">
                           Get in touch with us to discuss how our AI solutions can revolutionize your operations
                         </p>
                         <div className="flex items-center gap-4 pt-4">
-                          <button
+                          <RainbowButton
                             onClick={() => {}}
-                            className="inline-flex items-center gap-2 px-8 h-12 rounded-xl bg-zinc-900/50 border border-blue-500/20 text-white font-medium transition-all duration-300 hover:border-blue-500/30 hover:scale-[1.02] relative overflow-hidden group"
+                            variant="black"
                           >
-                            <div className="absolute inset-0 opacity-10 transition-opacity duration-300 group-hover:opacity-20 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600" />
-                            <div className="relative z-10 flex items-center gap-2">
-                              <MessageSquare className="w-4 h-4" />
-                              Contact Us Now
-                              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                            </div>
-                          </button>
+                            <MessageSquare className="w-4 h-4" />
+                            Contact Us Now
+                            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          </RainbowButton>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </HighlighterItem>
-            </div>
-          </HighlightGroup>
-
-          {/* Icon Cloud Side */}
-          <HighlightGroup className="group h-full">
-            <div className="group/item h-full" data-aos="fade-down">
-              <HighlighterItem className="rounded-3xl p-4 h-full">
-                <div className="relative z-20 h-full overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/20">
-                  <Particles
-                    className="absolute inset-0 -z-10 opacity-10 transition-opacity duration-1000 ease-in-out group-hover/item:opacity-100"
-                    quantity={80}
-                    color={"#3b82f6"}
-                    vy={-0.2}
-                  />
-                  <div className="flex items-center justify-center h-full p-4">
-                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-lg">
-                      <IconCloud iconSlugs={techIcons} />
                     </div>
                   </div>
                 </div>

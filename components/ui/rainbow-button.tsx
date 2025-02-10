@@ -20,10 +20,10 @@ export function RainbowButton({
         // Border styles based on variant
         variant === "black" ? 
           "before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-r before:from-[hsl(var(--color-1))] before:via-[hsl(var(--color-3))] before:to-[hsl(var(--color-5))]" :
-          "border-2 border-black",
+          "before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-r before:from-[hsl(var(--color-1))] before:via-[hsl(var(--color-3))] before:to-[hsl(var(--color-5))]",
         "after:absolute after:inset-[2px] after:rounded-[10px]",
         // Hover effect
-        variant === "black" ? "hover:before:opacity-90" : "hover:bg-zinc-50",
+        variant === "black" ? "hover:before:opacity-90" : "hover:before:opacity-90",
         // Variant specific styles
         variant === "black" ? 
           "after:bg-black text-white" : 

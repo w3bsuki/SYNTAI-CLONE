@@ -2,8 +2,15 @@ import { useEffect, useState } from "react"
 import { motion, Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
+interface TypewriterText {
+  prefix: string
+  suffix: string
+  prefixColor: string
+  suffixColor: string
+}
+
 interface TypewriterProps {
-  text: string | string[]
+  text: string | string[] | TypewriterText[]
   speed?: number
   initialDelay?: number
   waitTime?: number
@@ -45,21 +52,29 @@ const Typewriter = ({
     },
   },
 }: TypewriterProps) => {
-  const [displayText, setDisplayText] = useState("")
+  const [displayText, setDisplayText] = useState<{ prefix: string; suffix: string }>({ prefix: "", suffix: "" })
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
 
   const texts = Array.isArray(text) ? text : [text]
+  const isColoredText = (item: any): item is TypewriterText => 
+    typeof item === "object" && "prefix" in item && "suffix" in item
 
   useEffect(() => {
     let timeout: NodeJS.Timeout
 
     const currentText = texts[currentTextIndex]
+    const currentTextObj = isColoredText(currentText) 
+      ? currentText 
+      : { prefix: currentText, suffix: "" }
+    const fullText = isColoredText(currentText) 
+      ? currentText.prefix + currentText.suffix 
+      : currentText.toString()
 
     const startTyping = () => {
       if (isDeleting) {
-        if (displayText === "") {
+        if (displayText.prefix === "" && displayText.suffix === "") {
           setIsDeleting(false)
           if (currentTextIndex === texts.length - 1 && !loop) {
             return
@@ -69,13 +84,26 @@ const Typewriter = ({
           timeout = setTimeout(() => {}, waitTime)
         } else {
           timeout = setTimeout(() => {
-            setDisplayText((prev) => prev.slice(0, -1))
+            if (displayText.suffix.length > 0) {
+              setDisplayText(prev => ({ ...prev, suffix: prev.suffix.slice(0, -1) }))
+            } else {
+              setDisplayText(prev => ({ ...prev, prefix: prev.prefix.slice(0, -1) }))
+            }
           }, deleteSpeed)
         }
       } else {
-        if (currentIndex < currentText.length) {
+        if (currentIndex < fullText.length) {
           timeout = setTimeout(() => {
-            setDisplayText((prev) => prev + currentText[currentIndex])
+            const char = fullText[currentIndex]
+            if (isColoredText(currentText)) {
+              if (currentIndex < currentText.prefix.length) {
+                setDisplayText(prev => ({ ...prev, prefix: prev.prefix + char }))
+              } else {
+                setDisplayText(prev => ({ ...prev, suffix: prev.suffix + char }))
+              }
+            } else {
+              setDisplayText(prev => ({ ...prev, prefix: prev.prefix + char }))
+            }
             setCurrentIndex((prev) => prev + 1)
           }, speed)
         } else if (texts.length > 1) {
@@ -87,7 +115,7 @@ const Typewriter = ({
     }
 
     // Apply initial delay only at the start
-    if (currentIndex === 0 && !isDeleting && displayText === "") {
+    if (currentIndex === 0 && !isDeleting && displayText.prefix === "" && displayText.suffix === "") {
       timeout = setTimeout(startTyping, initialDelay)
     } else {
       startTyping()
@@ -106,16 +134,23 @@ const Typewriter = ({
     loop,
   ])
 
+  const currentText = texts[currentTextIndex]
+  const prefixColor = isColoredText(currentText) ? currentText.prefixColor : ""
+  const suffixColor = isColoredText(currentText) ? currentText.suffixColor : ""
+
   return (
     <div className={`inline whitespace-pre-wrap tracking-tight ${className}`}>
-      <span>{displayText}</span>
+      <span className={prefixColor}>{displayText.prefix}</span>
+      <span className={suffixColor}>{displayText.suffix}</span>
       {showCursor && (
         <motion.span
           variants={cursorAnimationVariants}
           className={cn(
             cursorClassName,
             hideCursorOnType &&
-              (currentIndex < texts[currentTextIndex].length || isDeleting)
+              (currentIndex < (isColoredText(currentText) 
+                ? currentText.prefix.length + currentText.suffix.length 
+                : currentText.toString().length) || isDeleting)
               ? "hidden"
               : ""
           )}

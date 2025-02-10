@@ -42,9 +42,9 @@ export default function Hero() {
   const [isBookDemoOpen, setIsBookDemoOpen] = useState(false);
   
   const aiTypes = [
-    "Government AI",
-    "Business AI",
-    "Industry AI"
+    { prefix: "Business", suffix: " AI", prefixColor: "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent", suffixColor: "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent" },
+    { prefix: "Enterprise", suffix: " AI", prefixColor: "bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent", suffixColor: "bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent" },
+    { prefix: "Government", suffix: " AI", prefixColor: "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent", suffixColor: "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent" }
   ];
 
   return (
@@ -83,7 +83,7 @@ export default function Hero() {
               >
                 <h1 className="text-5xl md:text-7xl font-medium tracking-tight leading-[1.1]">
                   <span className="block text-white">Power</span>
-                  <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
+                  <span>
                     <Typewriter 
                       text={aiTypes}
                       speed={50}
@@ -114,21 +114,47 @@ export default function Hero() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col sm:flex-row gap-3 pt-2"
               >
-                <RainbowButton
-                  onClick={() => setIsBookDemoOpen(true)}
-                  variant="black"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="w-[200px]"
                 >
-                  <span>Book a Demo</span>
-                  <ArrowRight className="w-4 h-4" />
-                </RainbowButton>
+                  <RainbowButton
+                    onClick={() => setIsBookDemoOpen(true)}
+                    variant="black"
+                    className="w-full"
+                  >
+                    <span>Book a Demo</span>
+                    <motion.div
+                      whileHover={{ x: 4 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.div>
+                  </RainbowButton>
+                </motion.div>
 
-                <RainbowButton
-                  onClick={() => window.location.href = '#services'}
-                  variant="white"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="w-[200px]"
                 >
-                  <span>Build AI</span>
-                  <ArrowRight className="w-4 h-4" />
-                </RainbowButton>
+                  <RainbowButton
+                    onClick={() => window.location.href = '#services'}
+                    variant="white"
+                    className="w-full"
+                  >
+                    <span>Build AI</span>
+                    <motion.div
+                      whileHover={{ x: 4 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.div>
+                  </RainbowButton>
+                </motion.div>
               </motion.div>
             </div>
           </div>

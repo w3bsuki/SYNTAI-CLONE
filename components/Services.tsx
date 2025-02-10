@@ -114,13 +114,13 @@ const services = [
 export default function Services() {
   const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
   const sectorTypes = [
-    "Business",
-    "Enterprise",
-    "Government"
+    { prefix: "Business", suffix: "", prefixColor: "bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent", suffixColor: "" },
+    { prefix: "Enterprise", suffix: "", prefixColor: "bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent", suffixColor: "" },
+    { prefix: "Government", suffix: "", prefixColor: "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent", suffixColor: "" }
   ];
 
   return (
-    <section id="services" className="relative overflow-hidden bg-black py-16 sm:py-24 md:py-32">
+    <section id="services" className="relative overflow-hidden bg-black py-8 sm:py-16 md:py-32">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(24,24,27,0.5),rgba(0,0,0,1))]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
@@ -131,20 +131,20 @@ export default function Services() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mx-auto max-w-[90%] sm:max-w-2xl text-center mb-12 sm:mb-16 md:mb-24"
+          className="mx-auto max-w-[95%] xs:max-w-[90%] sm:max-w-2xl text-center mb-8 sm:mb-12 md:mb-24"
         >
           <HeroBadge 
             text="Services"
             variant="outline"
-            icon={<Cpu className="w-4 h-4" />}
+            icon={<Cpu className="w-3 h-3 sm:w-4 sm:h-4" />}
           />
 
-          <div className="mt-6 sm:mt-8 flex flex-col items-center">
-            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-8" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
+          <div className="mt-4 sm:mt-6 flex flex-col items-center">
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-6 sm:mb-8" />
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
               <span className="text-white">AI Solutions for</span>
               <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+              <span>
                 <Typewriter 
                   text={sectorTypes}
                   speed={50}
@@ -155,10 +155,10 @@ export default function Services() {
                 />
               </span>
             </h2>
-            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-8" />
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6 sm:mt-8" />
           </div>
 
-          <p className="mt-6 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-zinc-400 max-w-[95%] mx-auto">
             Unlock the power of artificial intelligence with our enterprise-grade solutions, expertly crafted to drive innovation and growth.
           </p>
         </motion.div>
@@ -168,14 +168,14 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto place-items-stretch"
+          className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto place-items-stretch"
         >
           {services.map((service) => (
             <motion.div
               key={service.title}
               variants={cardVariants}
               whileHover={{ scale: 1.02 }}
-              className="group relative w-full"
+              className="group relative w-full max-w-[95%] xs:max-w-sm mx-auto"
               style={{ backfaceVisibility: 'hidden' }}
             >
               {/* Card Container */}
@@ -190,7 +190,7 @@ export default function Services() {
                 </div>
 
                 {/* Content */}
-                <div className="relative flex flex-col items-center text-center p-6 sm:p-8 h-full">
+                <div className="relative flex flex-col items-center text-center p-4 sm:p-6 sm:p-8 h-full">
                   <div className="flex flex-col items-center flex-1">
                     {/* Icon */}
                     <motion.div
@@ -200,13 +200,13 @@ export default function Services() {
                       className="relative"
                     >
                       {/* Glowing circle behind icon */}
-                      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-r ${service.gradient} opacity-30 rounded-full blur-sm`} />
+                      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-r ${service.gradient} opacity-30 rounded-full blur-sm`} />
                       
                       {/* Icon wrapper */}
-                      <div className="relative flex items-center justify-center w-12 h-12 rounded-xl overflow-hidden">
+                      <div className="relative flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 rounded-xl overflow-hidden">
                         <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-20`} />
                         <div className="absolute inset-[1px] bg-black rounded-lg" />
-                        <service.icon className={`relative z-10 h-6 w-6 ${
+                        <service.icon className={`relative z-10 h-5 w-5 sm:h-6 sm:w-6 ${
                           service.gradient.includes("emerald") ? "text-emerald-500" :
                           service.gradient.includes("blue") ? "text-blue-500" :
                           service.gradient.includes("violet") ? "text-violet-500" :
@@ -220,7 +220,7 @@ export default function Services() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className={`mt-4 text-lg font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
+                      className={`mt-3 sm:mt-4 text-lg sm:text-xl font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}
                     >
                       {service.title}
                     </motion.h3>
@@ -228,25 +228,25 @@ export default function Services() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
-                      className="mt-2 text-sm leading-relaxed text-zinc-400"
+                      className="mt-1 sm:mt-2 text-xs sm:text-sm leading-relaxed text-zinc-400"
                     >
                       {service.description}
                     </motion.p>
 
                     {/* Features */}
-                    <div className="mt-6 space-y-2 w-full">
+                    <div className="mt-4 sm:mt-6 space-y-1.5 sm:space-y-2 w-full">
                       {service.features.map((feature, index) => (
                         <motion.div 
                           key={feature}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.4 + index * 0.1 }}
-                          className="relative flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
+                          className="relative flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
                           style={{ backfaceVisibility: 'hidden' }}
                         >
-                          <div className={`relative z-10 flex items-center justify-center w-5 h-5 rounded-md bg-gradient-to-b ${service.gradient} p-[1px]`}>
+                          <div className={`relative z-10 flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-gradient-to-b ${service.gradient} p-[1px]`}>
                             <div className="w-full h-full rounded-md bg-black flex items-center justify-center">
-                              <service.icon className={`h-3 w-3 ${
+                              <service.icon className={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${
                                 service.gradient.includes("emerald") ? "text-emerald-500" :
                                 service.gradient.includes("blue") ? "text-blue-500" :
                                 service.gradient.includes("violet") ? "text-violet-500" :
@@ -254,7 +254,7 @@ export default function Services() {
                               }`} />
                             </div>
                           </div>
-                          <span className="text-xs font-medium text-zinc-300">
+                          <span className="text-[10px] sm:text-xs font-medium text-zinc-300">
                             {feature}
                           </span>
                         </motion.div>
@@ -263,7 +263,7 @@ export default function Services() {
                   </div>
 
                   {/* Action Button */}
-                  <div className="mt-6 w-full">
+                  <div className="mt-4 sm:mt-6 w-full">
                     <motion.button
                       onClick={() => setSelectedService(service)}
                       whileHover={{ scale: 1.02 }}
@@ -272,11 +272,11 @@ export default function Services() {
                       style={{ backfaceVisibility: 'hidden' }}
                     >
                       <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient}`} />
-                      <div className="relative flex items-center justify-center gap-2 px-4 py-2">
-                        <span className="text-xs font-semibold text-white">
+                      <div className="relative flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2">
+                        <span className="text-[10px] sm:text-xs font-semibold text-white">
                           Learn More
                         </span>
-                        <ArrowRight className="w-3.5 h-3.5 text-white" />
+                        <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
                       </div>
                     </motion.button>
                   </div>

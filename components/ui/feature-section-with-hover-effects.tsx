@@ -27,7 +27,7 @@ export function FeaturesSectionWithHoverEffects() {
     },
     {
       title: "Scale",
-      description: "Expand and optimize your AI capabilities for maximum business impact.",
+      description: "Expand and optimize your AI capabilities for maximum impact.",
       icon: ChartLine,
     },
   ];
@@ -71,27 +71,27 @@ const ProcessStep = ({
     <div className="relative group h-full">
       {/* Step Container */}
       <div className={cn(
-        "flex flex-col items-center text-center px-6 py-10 relative h-full",
+        "flex flex-col items-center text-center px-4 sm:px-6 py-6 sm:py-10 relative h-full",
         "hover:bg-zinc-900/50 transition-all duration-300",
-        "rounded-xl border border-zinc-800/50",
+        "rounded-xl border border-blue-500/20",
         "backdrop-blur-sm",
-        "group-hover:border-blue-500/20"
+        "group-hover:border-blue-500/40"
       )}>
         {/* Step Number */}
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-1">
-          <span className="text-sm font-medium text-blue-400">Step {index + 1}</span>
+        <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 bg-blue-500/10 border border-blue-500/30 rounded-full px-2 sm:px-3 py-0.5 sm:py-1">
+          <span className="text-xs sm:text-sm font-medium text-blue-400">Step {index + 1}</span>
         </div>
 
         {/* Icon */}
-        <div className="relative size-16 mb-6 rounded-xl bg-gradient-to-b from-blue-500/10 to-transparent border border-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <Icon className="size-8 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
+        <div className="relative size-12 sm:size-16 mb-4 sm:mb-6 rounded-xl bg-gradient-to-b from-blue-500/10 to-transparent border border-blue-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <Icon className="size-6 sm:size-8 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
         </div>
 
         {/* Content */}
-        <h3 className="text-xl font-semibold text-zinc-200 mb-3 relative z-10">
+        <h3 className="text-base sm:text-xl font-semibold text-zinc-200 mb-2 sm:mb-3 relative z-10">
           {title}
         </h3>
-        <p className="text-sm leading-relaxed text-zinc-400 relative z-10">
+        <p className="text-xs sm:text-sm leading-relaxed text-zinc-400 relative z-10">
           {description}
         </p>
       </div>

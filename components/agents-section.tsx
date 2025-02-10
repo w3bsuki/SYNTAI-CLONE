@@ -73,7 +73,7 @@ const agents = [
     name: "AIDO",
     description: "Data & Administration",
     icon: Bot,
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-blue-500 via-cyan-400 to-blue-600",
     features: [
       "Real-time Analytics",
       "Automated Workflows",
@@ -94,7 +94,7 @@ const agents = [
     name: "AIDY",
     description: "Customer Support",
     icon: Bot,
-    gradient: "from-violet-500 to-purple-500",
+    gradient: "from-emerald-500 via-green-500 to-teal-500",
     features: [
       "Natural Conversations",
       "Context Awareness",
@@ -107,7 +107,7 @@ const agents = [
       leftLabel: "24/7",
       rightLabel: "Active",
       status: "success" as const,
-      color: "violet"
+      color: "emerald"
     },
     buttonText: "Explore AIDY"
   },
@@ -187,7 +187,7 @@ export default function AgentsSection() {
   };
 
   return (
-    <section id="agents" className="relative overflow-hidden bg-black py-16 sm:py-24 md:py-32">
+    <section id="agents" className="relative overflow-hidden bg-black py-8 sm:py-16 md:py-32">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(24,24,27,0.5),rgba(0,0,0,1))]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
@@ -198,20 +198,25 @@ export default function AgentsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mx-auto max-w-[90%] sm:max-w-2xl text-center mb-12 sm:mb-16 md:mb-24"
+          className="mx-auto max-w-[95%] xs:max-w-[90%] sm:max-w-2xl text-center mb-8 sm:mb-12 md:mb-24"
         >
           <HeroBadge 
             text="Agents"
             variant="outline"
-            icon={<Brain className="w-4 h-4" />}
+            icon={<Brain className="w-3 h-3 sm:w-4 sm:h-4" />}
           />
 
-          <div className="mt-6 sm:mt-8 flex flex-col items-center">
-            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-8" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
-              <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
+          <div className="mt-4 sm:mt-6 flex flex-col items-center">
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-6 sm:mb-8" />
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
+              <span>
                 <Typewriter 
-                  text={["AI Agents", "Meet AIDR", "Meet AIDY", "Meet AIDO"]}
+                  text={[
+                    { prefix: "AI", suffix: " Agents", prefixColor: "text-white", suffixColor: `bg-gradient-to-r ${selectedAgent?.gradient || "from-blue-500 via-cyan-400 to-blue-600"} bg-clip-text text-transparent` },
+                    { prefix: "Meet", suffix: " AIDO", prefixColor: "text-white", suffixColor: "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent" },
+                    { prefix: "Meet", suffix: " AIDY", prefixColor: "text-white", suffixColor: "bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent" },
+                    { prefix: "Meet", suffix: " AIDR", prefixColor: "text-white", suffixColor: "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent" }
+                  ]}
                   speed={100}
                   waitTime={3000}
                   loop={true}
@@ -220,10 +225,10 @@ export default function AgentsSection() {
                 />
               </span>
             </h2>
-            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-8" />
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-6 sm:mt-8" />
           </div>
 
-          <p className="mt-6 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[90%] mx-auto">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-zinc-400 max-w-[95%] mx-auto">
             Experience the future of AI with our specialized agents, each engineered to deliver unparalleled performance and intelligence for your business needs.
           </p>
         </motion.div>
@@ -233,44 +238,31 @@ export default function AgentsSection() {
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto place-items-center"
+          className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3 max-w-5xl mx-auto place-items-center"
         >
           {agents.map((agent) => {
             // Define color schemes for each agent
             const colorScheme = agent.name === "AIDO" 
-              ? "from-red-500 via-red-600 to-red-700"
+              ? "from-blue-500 via-cyan-400 to-blue-600"
               : agent.name === "AIDY"
-              ? "from-blue-500 via-cyan-500 to-indigo-500"
-              : "from-emerald-500 via-green-500 to-teal-500";
-
-            // Define solid colors for each agent
-            const solidColor = agent.name === "AIDO" 
-              ? "red-500"
-              : agent.name === "AIDY"
-              ? "blue-500"
-              : "emerald-500";
+              ? "from-emerald-500 via-green-500 to-teal-500"
+              : "from-orange-500 to-pink-500";
 
             // Define button text color
             const buttonTextColor = agent.name === "AIDO" 
-              ? "text-red-500"
-              : agent.name === "AIDY"
               ? "text-blue-500"
-              : "text-emerald-500";
-
-            // Define border color
-            const borderColor = agent.name === "AIDO" 
-              ? "border-red-500/30"
               : agent.name === "AIDY"
-              ? "border-blue-500/30"
-              : "border-emerald-500/30";
+              ? "text-emerald-500"
+              : "text-orange-500";
 
             return (
               <motion.div
                 key={agent.name}
                 variants={cardVariants}
                 whileHover={{ scale: 1.02 }}
-                className="group relative w-full max-w-sm"
+                className="group relative w-full max-w-[95%] xs:max-w-sm cursor-pointer"
                 style={{ backfaceVisibility: 'hidden' }}
+                onClick={() => setSelectedAgent(agent)}
               >
                 {/* Card Container */}
                 <div className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black/80">
@@ -278,17 +270,45 @@ export default function AgentsSection() {
                   <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80" />
                   <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-[0.07]`} />
                   
-                  {/* Spotlight Effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)]" />
-                  
                   {/* Glowing Border Effect */}
                   <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-90`}>
                     <div className="absolute inset-[1px] rounded-2xl bg-black" />
                   </div>
+                  
+                  {/* Spotlight Effect */}
+                  <div className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)]" />
 
                   {/* Card Content */}
-                  <div className="relative flex flex-col items-center justify-between p-6 h-full">
+                  <div className="relative z-20 flex flex-col items-center justify-between p-4 sm:p-6 h-full">
                     <div className="flex flex-col items-center w-full">
+                      {/* Status Badge */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="mb-3 sm:mb-4"
+                      >
+                        <div className="relative flex items-center gap-2 px-3 py-1 rounded-full">
+                          <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-10 rounded-full`} />
+                          <div className="absolute inset-[1px] bg-black rounded-full" />
+                          <div className="relative z-10 flex items-center gap-1.5">
+                            <span className="relative flex h-1.5 w-1.5">
+                              <span className={`absolute inline-flex h-full w-full rounded-full ${
+                                agent.name === "AIDO" ? "bg-blue-500" : 
+                                agent.name === "AIDY" ? "bg-emerald-500" : 
+                                "bg-orange-500"
+                              } opacity-75 animate-ping`} />
+                              <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${
+                                agent.name === "AIDO" ? "bg-blue-500" : 
+                                agent.name === "AIDY" ? "bg-emerald-500" : 
+                                "bg-orange-500"
+                              }`} />
+                            </span>
+                            <span className={`text-xs font-medium ${buttonTextColor}`}>Online</span>
+                          </div>
+                        </div>
+                      </motion.div>
+
                       {/* Icon Container */}
                       <motion.div
                         variants={iconVariants}
@@ -307,32 +327,12 @@ export default function AgentsSection() {
                         </div>
                       </motion.div>
 
-                      {/* Status Badge */}
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="mt-4"
-                      >
-                        <div className="relative flex items-center gap-2 px-3 py-1 rounded-full">
-                          <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-10 rounded-full`} />
-                          <div className="absolute inset-[1px] bg-black rounded-full" />
-                          <div className="relative z-10 flex items-center gap-1.5">
-                            <span className="relative flex h-1.5 w-1.5">
-                              <span className={`absolute inline-flex h-full w-full rounded-full ${agent.name === "AIDO" ? "bg-red-500" : agent.name === "AIDY" ? "bg-blue-500" : "bg-emerald-500"} opacity-75 animate-ping`} />
-                              <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${agent.name === "AIDO" ? "bg-red-500" : agent.name === "AIDY" ? "bg-blue-500" : "bg-emerald-500"}`} />
-                            </span>
-                            <span className={`text-xs font-medium ${buttonTextColor}`}>Online</span>
-                          </div>
-                        </div>
-                      </motion.div>
-
                       {/* Title & Description */}
                       <motion.h3
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
-                        className={`mt-4 text-xl font-bold bg-gradient-to-r ${colorScheme} bg-clip-text text-transparent`}
+                        className={`mt-3 sm:mt-4 text-lg sm:text-xl font-bold bg-gradient-to-r ${agent.gradient} bg-clip-text text-transparent`}
                         style={{ backfaceVisibility: 'hidden' }}
                       >
                         {agent.name}
@@ -341,18 +341,18 @@ export default function AgentsSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="mt-1.5 text-xs text-zinc-400"
+                        className="mt-1 sm:mt-1.5 text-xs sm:text-sm text-zinc-400"
                       >
                         {agent.description}
                       </motion.p>
 
                       {/* Features Grid */}
-                      <div className="mt-6 grid grid-cols-1 gap-2 w-full">
+                      <div className="mt-4 sm:mt-6 grid grid-cols-1 gap-2 w-full">
                         {agent.features.map((feature, index) => (
                           <motion.div 
                             key={feature}
                             whileHover={{ scale: 1.01 }}
-                            className="relative flex items-center px-3 py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
+                            className="relative flex items-center px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
                             style={{ backfaceVisibility: 'hidden' }}
                           >
                             {/* Feature Content */}
@@ -370,9 +370,8 @@ export default function AgentsSection() {
                     </div>
 
                     {/* Action Button */}
-                    <div className="mt-6 w-full">
+                    <div className="mt-4 sm:mt-6 w-full">
                       <motion.button
-                        onClick={() => setSelectedAgent(agent)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className="relative w-full overflow-hidden rounded-lg"
@@ -399,66 +398,81 @@ export default function AgentsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="mt-16 max-w-2xl mx-auto"
+          className="mt-16 sm:mt-24 max-w-2xl mx-auto px-2 sm:px-0"
         >
-          <div className="text-center mb-6">
-            <p className="text-zinc-400 text-sm">Have questions? Our AI agents are here to help.</p>
+          <div className="text-center mb-4 sm:mb-6">
+            <p className="text-xs sm:text-sm text-zinc-400">Have questions? Our AI agents are here to help.</p>
           </div>
           
           <div className="relative">
             {/* Display Messages */}
-            <div className="mb-4 space-y-4 max-h-[400px] overflow-y-auto p-4 rounded-lg bg-black/50 border border-zinc-800/50">
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    "flex gap-2 p-2 rounded-lg",
-                    message.role === "assistant" ? "bg-zinc-900/50" : "bg-blue-900/20"
-                  )}
-                >
-                  <span 
+            <div className="relative mb-3 sm:mb-4 space-y-3 sm:space-y-4 max-h-[300px] sm:max-h-[400px] overflow-y-auto p-3 sm:p-4 rounded-xl bg-black/80">
+              {/* Gradient Border */}
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 rounded-xl opacity-90">
+                <div className="absolute inset-[1px] rounded-xl bg-black" />
+              </div>
+              
+              {/* Messages Content */}
+              <div className="relative z-10">
+                {messages.map((message, index) => (
+                  <div
+                    key={index}
                     className={cn(
-                      "shrink-0 w-6 h-6 rounded-full bg-gradient-to-r flex items-center justify-center text-xs font-medium text-white",
-                      message.role === "assistant" 
-                        ? "from-violet-500 to-purple-500" 
-                        : "from-blue-500 to-cyan-500"
+                      "flex gap-2 p-2 rounded-lg text-sm mb-2",
+                      message.role === "assistant" ? "bg-zinc-900/50" : "bg-blue-900/20"
                     )}
                   >
-                    {message.role === "assistant" ? "AI" : "U"}
-                  </span>
-                  <p className="text-sm text-zinc-300">{message.content}</p>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex gap-2 p-2 rounded-lg bg-zinc-900/50">
-                  <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-violet-500 to-purple-500 flex items-center justify-center text-xs font-medium text-white">
-                    AI
-                  </span>
-                  <p className="text-sm text-zinc-300">Thinking...</p>
-                </div>
-              )}
+                    <span 
+                      className={cn(
+                        "shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r flex items-center justify-center text-[10px] sm:text-xs font-medium text-white",
+                        message.role === "assistant" 
+                          ? "from-violet-500 via-fuchsia-500 to-pink-500" 
+                          : "from-blue-500 via-cyan-400 to-blue-600"
+                      )}
+                    >
+                      {message.role === "assistant" ? "AI" : "U"}
+                    </span>
+                    <p className="text-xs sm:text-sm text-zinc-300">{message.content}</p>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="flex gap-2 p-2 rounded-lg bg-zinc-900/50">
+                    <span className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 flex items-center justify-center text-[10px] sm:text-xs font-medium text-white">
+                      AI
+                    </span>
+                    <p className="text-xs sm:text-sm text-zinc-300">Thinking...</p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Chat Input */}
-            <ChatInput
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onSubmit={handleSubmit}
-              loading={isLoading}
-              className="bg-black/80 backdrop-blur-sm border border-zinc-800/50 hover:border-blue-500/20 transition-colors rounded-xl overflow-hidden"
-            >
-              <ChatInputTextArea 
-                placeholder="Ask anything about our AI agents..." 
-                className="min-h-[60px] text-zinc-300 placeholder:text-zinc-600 bg-transparent focus:outline-none resize-none px-4 py-3"
-                disabled={isLoading}
-              />
-              <div className="px-2 pb-2">
-                <ChatInputSubmit 
-                  className="bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 text-white hover:opacity-90 transition-opacity"
-                  loading={isLoading}
-                />
+            <div className="relative">
+              {/* Gradient Border */}
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 rounded-xl opacity-90">
+                <div className="absolute inset-[1px] rounded-xl bg-black" />
               </div>
-            </ChatInput>
+
+              <ChatInput
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onSubmit={handleSubmit}
+                loading={isLoading}
+                className="relative z-10 bg-transparent backdrop-blur-sm rounded-xl overflow-hidden"
+              >
+                <ChatInputTextArea 
+                  placeholder="Ask anything about our AI agents..." 
+                  className="min-h-[45px] sm:min-h-[60px] text-xs sm:text-sm text-zinc-300 placeholder:text-zinc-600 bg-transparent focus:outline-none resize-none px-3 sm:px-4 py-2 sm:py-3"
+                  disabled={isLoading}
+                />
+                <div className="px-2 pb-2">
+                  <ChatInputSubmit 
+                    className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 text-white hover:opacity-90 transition-opacity"
+                    loading={isLoading}
+                  />
+                </div>
+              </ChatInput>
+            </div>
           </div>
         </motion.div>
       </div>
