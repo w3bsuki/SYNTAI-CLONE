@@ -11,7 +11,7 @@ const processSteps = [
   {
     number: 1,
     title: "Discovery",
-    description: "We first analyze your business and internal processes",
+    description: "We first analyze your business and all internal processes",
     icon: Search,
     gradient: "from-blue-500 via-cyan-400 to-blue-600",
     details: {

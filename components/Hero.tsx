@@ -7,6 +7,7 @@ import { Typewriter } from "@/components/ui/typewriter";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import { BookDemoDialog } from "@/components/ui/book-demo-dialog";
 import { Announcement } from "@/components/ui/announcement";
+import { BuildAiDialog } from "@/components/ui/build-ai-dialog";
 
 interface TypewriterItem {
   prefix: string;
@@ -17,6 +18,7 @@ interface TypewriterItem {
 
 export default function Hero() {
   const [isBookDemoOpen, setIsBookDemoOpen] = useState(false);
+  const [isBuildAiOpen, setIsBuildAiOpen] = useState(false);
   
   const aiTypes: TypewriterItem[] = [
     { prefix: "Government", suffix: "", prefixColor: "bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent", suffixColor: "" },
@@ -46,8 +48,9 @@ export default function Hero() {
               onClick={() => window.location.href = '#agents'}
             >
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 via-cyan-400/10 to-blue-600/10 border border-blue-500/20">
-                <span className="text-[13px] font-medium bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
-                  Meet AIDR, our Fullstack Agent
+                <span className="text-[13px] font-medium">
+                  <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent">Meet AIDR</span>
+                  <span className="text-white">, our Fullstack Agent</span>
                 </span>
                 <ArrowDown className="w-4 h-4 text-cyan-400" />
               </div>
@@ -106,7 +109,7 @@ export default function Hero() {
               </RainbowButton>
 
               <RainbowButton
-                onClick={() => window.location.href = '#services'}
+                onClick={() => setIsBuildAiOpen(true)}
                 variant="white"
                 className="w-full sm:w-[180px] py-3"
               >
@@ -136,6 +139,12 @@ export default function Hero() {
       <BookDemoDialog 
         isOpen={isBookDemoOpen}
         onClose={() => setIsBookDemoOpen(false)}
+      />
+
+      {/* Build AI Dialog */}
+      <BuildAiDialog
+        isOpen={isBuildAiOpen}
+        onClose={() => setIsBuildAiOpen(false)}
       />
     </section>
   );

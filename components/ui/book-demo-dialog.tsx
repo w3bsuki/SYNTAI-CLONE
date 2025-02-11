@@ -1,158 +1,104 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Building2, Users, Bot, ArrowRight, MessageSquare } from "lucide-react";
+"use client";
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-import { RainbowButton } from "@/components/ui/rainbow-button";
+import { Calendar, Clock, ArrowRight } from "lucide-react";
 
 interface BookDemoDialogProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const businessSizes = [
-  { id: "startup", label: "Startup (1-10)", icon: Building2 },
-  { id: "small", label: "Small Business (11-50)", icon: Building2 },
-  { id: "medium", label: "Medium Business (51-200)", icon: Building2 },
-  { id: "enterprise", label: "Enterprise (201+)", icon: Building2 },
-];
-
-const agentTypes = [
-  { id: "aido", label: "AIDO - Data Processing AI", icon: Bot },
-  { id: "aidy", label: "AIDY - Customer Service AI", icon: Bot },
-  { id: "aidr", label: "AIDR - Business Intelligence AI", icon: Bot },
-];
-
 export function BookDemoDialog({ isOpen, onClose }: BookDemoDialogProps) {
-  const [selectedSize, setSelectedSize] = useState<string>("");
-  const [selectedAgent, setSelectedAgent] = useState<string>("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-
-  const handleSubmit = () => {
-    // Here you would typically send this data to your backend
-    const formData = {
-      businessSize: selectedSize,
-      agentType: selectedAgent,
-      email,
-      name,
-    };
-    
-    console.log("Form submitted:", formData);
-    
-    // Redirect to WhatsApp
-    const whatsappLink = "https://wa.me/YOUR_PHONE_NUMBER"; // Replace with your WhatsApp link
-    window.open(whatsappLink, "_blank");
-    
-    onClose();
-  };
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] bg-zinc-950/70 border-zinc-800/50 p-6 gap-0 backdrop-blur-xl">
-        <DialogHeader className="pb-5 mb-6 border-b border-zinc-800/50">
-          <div className="flex items-center gap-4">
-            <div className="relative rounded-xl p-2.5 overflow-hidden bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
-              <MessageSquare className="relative z-10 h-5 w-5 text-blue-400" />
-            </div>
-            <div className="flex-1">
-              <DialogTitle className="text-xl font-semibold bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">
-                Book a Demo
-              </DialogTitle>
-              <DialogDescription className="text-sm text-zinc-400 mt-1.5">
-                Tell us about your business and we'll help you find the perfect AI solution
-              </DialogDescription>
-            </div>
-          </div>
+      <DialogContent className="bg-black/95 border-zinc-800/50 w-[95%] max-w-lg p-4 sm:p-6 gap-4">
+        <DialogHeader className="space-y-2">
+          <DialogTitle className="text-lg sm:text-xl text-white">
+            Book a Demo
+          </DialogTitle>
+          <DialogDescription className="text-sm text-zinc-400 [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">
+            Schedule a personalized demo with our AI experts.
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* Business Size Selection */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">
-              Business Size
-            </h4>
-            <div className="grid grid-cols-2 gap-3">
-              {businessSizes.map((size) => (
-                <button
-                  key={size.id}
-                  onClick={() => setSelectedSize(size.id)}
-                  className={`group flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${
-                    selectedSize === size.id
-                      ? "border-blue-500/50 bg-blue-500/10"
-                      : "border-zinc-800/50 bg-zinc-900/50 hover:bg-zinc-900/70 hover:border-zinc-700/50"
-                  }`}
-                >
-                  <div className="relative flex items-center justify-center shrink-0 size-8 rounded-full bg-zinc-900 border border-zinc-800/50">
-                    <size.icon className="size-4 text-zinc-400" />
-                  </div>
-                  <span className="text-sm font-medium text-zinc-300">{size.label}</span>
-                </button>
-              ))}
+        <div className="grid gap-4 py-2 sm:py-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="name" className="text-xs sm:text-sm text-zinc-200">Name</Label>
+              <Input 
+                id="name" 
+                placeholder="Enter your name" 
+                className="h-8 sm:h-10 text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200" 
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-xs sm:text-sm text-zinc-200">Email</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="Enter your email" 
+                className="h-8 sm:h-10 text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200" 
+              />
             </div>
           </div>
 
-          {/* Agent Type Selection */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">
-              Preferred Agent
-            </h4>
-            <div className="grid grid-cols-1 gap-3">
-              {agentTypes.map((agent) => (
-                <button
-                  key={agent.id}
-                  onClick={() => setSelectedAgent(agent.id)}
-                  className={`group flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${
-                    selectedAgent === agent.id
-                      ? "border-blue-500/50 bg-blue-500/10"
-                      : "border-zinc-800/50 bg-zinc-900/50 hover:bg-zinc-900/70 hover:border-zinc-700/50"
-                  }`}
-                >
-                  <div className="relative flex items-center justify-center shrink-0 size-8 rounded-full bg-zinc-900 border border-zinc-800/50">
-                    <agent.icon className="size-4 text-zinc-400" />
-                  </div>
-                  <span className="text-sm font-medium text-zinc-300">{agent.label}</span>
-                </button>
-              ))}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="date" className="text-xs sm:text-sm text-zinc-200">Preferred Date</Label>
+              <div className="relative">
+                <Input 
+                  id="date" 
+                  type="date" 
+                  className="h-8 sm:h-10 text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 pl-9" 
+                />
+                <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="time" className="text-xs sm:text-sm text-zinc-200">Preferred Time</Label>
+              <div className="relative">
+                <Input 
+                  id="time" 
+                  type="time" 
+                  className="h-8 sm:h-10 text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 pl-9" 
+                />
+                <Clock className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+              </div>
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium bg-gradient-to-br from-white to-zinc-400 bg-clip-text text-transparent">
-              Contact Information
-            </h4>
-            <div className="space-y-3">
-              <input
-                type="text"
-                placeholder="Your Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-zinc-800/50 bg-zinc-900/50 text-zinc-300 placeholder:text-zinc-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50"
-              />
-              <input
-                type="email"
-                placeholder="Business Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-zinc-800/50 bg-zinc-900/50 text-zinc-300 placeholder:text-zinc-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50"
-              />
-            </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="message" className="text-xs sm:text-sm text-zinc-200">Message</Label>
+            <Textarea 
+              id="message" 
+              placeholder="Tell us about your needs..." 
+              className="min-h-[60px] sm:min-h-[80px] text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200" 
+            />
           </div>
         </div>
 
-        {/* Submit Button */}
-        <div className="mt-6 pt-5 border-t border-zinc-800/50">
-          <RainbowButton
-            onClick={handleSubmit}
-            disabled={!selectedSize || !selectedAgent || !email || !name}
-            className="w-full"
-            variant="black"
+        <DialogFooter className="sm:justify-between">
+          <Button 
+            variant="outline" 
+            onClick={onClose}
+            className="w-full sm:w-auto bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-900/80"
           >
-            <span>Continue to WhatsApp</span>
+            Cancel
+          </Button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full sm:w-auto px-4 py-2 rounded-lg flex items-center justify-center gap-2 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 text-white hover:opacity-90 transition-all"
+          >
+            <span className="text-sm font-medium">Book Demo</span>
             <ArrowRight className="w-4 h-4" />
-          </RainbowButton>
-        </div>
+          </motion.button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

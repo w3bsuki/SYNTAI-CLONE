@@ -106,10 +106,10 @@ export default function Header() {
                 className="flex items-center"
               >
                 <div className="relative flex items-center">
-                  <span className="text-xl font-light tracking-widest bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent font-['Inter']">
+                  <span className="text-xl font-light tracking-widest text-white font-['Inter']">
                     SYNT
                   </span>
-                  <span className="relative text-xl font-light tracking-widest bg-gradient-to-r from-violet-400 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent font-['Inter']">
+                  <span className="relative text-xl font-light tracking-widest text-white font-['Inter']">
                     AI
                   </span>
                 </div>
