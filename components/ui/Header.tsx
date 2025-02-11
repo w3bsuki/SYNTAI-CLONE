@@ -48,7 +48,7 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { name: "Solutions", href: "#services" },
   { name: "Agents", href: "#agents", isHighlighted: true },
-  { name: "About", href: "#why-choose-us" },
+  { name: "Process", href: "#process" },
 ];
 
 export default function Header() {

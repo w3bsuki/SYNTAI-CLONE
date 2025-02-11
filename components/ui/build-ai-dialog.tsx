@@ -1,8 +1,14 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Brain, Cpu, MessageCircle, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { Bot, ArrowRight, Loader2, Check, Sparkles, Code, Cpu, Brain, Zap, Workflow } from "lucide-react";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface BuildAiDialogProps {
   isOpen: boolean;
@@ -10,74 +16,246 @@ interface BuildAiDialogProps {
 }
 
 export function BuildAiDialog({ isOpen, onClose }: BuildAiDialogProps) {
-  const solutions = [
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [selectedType, setSelectedType] = useState<string>("");
+
+  const aiTypes = [
     {
-      title: "AI Consulting",
-      description: "Strategic AI integration and roadmaps",
-      gradient: "from-emerald-500 to-green-500",
-      icon: Brain,
-      href: "#services"
+      id: "aido",
+      title: "AIDO",
+      subtitle: "Data Intelligence",
+      description: "Optimize data workflows & analytics",
+      features: ["Data Analysis", "ML Models", "Insights"],
+      gradient: "from-violet-500 via-fuchsia-500 to-pink-500",
+      icon: Brain
     },
     {
-      title: "Machine Learning",
-      description: "Custom ML models and automation",
+      id: "aidy",
+      title: "AIDY",
+      subtitle: "Development Assistant",
+      description: "Full-stack development & automation",
+      features: ["Code Generation", "Testing", "DevOps"],
       gradient: "from-blue-500 via-cyan-400 to-blue-600",
-      icon: Cpu,
-      href: "#services"
+      icon: Code
     },
     {
-      title: "Natural Language",
-      description: "NLP and conversational AI",
-      gradient: "from-violet-500 to-purple-500",
-      icon: MessageCircle,
-      href: "#services"
+      id: "aidr",
+      title: "AIDR",
+      subtitle: "Process Automation",
+      description: "Streamline business workflows",
+      features: ["Automation", "Integration", "Scaling"],
+      gradient: "from-emerald-500 via-green-500 to-teal-500",
+      icon: Workflow
     }
   ];
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setIsSubmitting(false);
+    setSubmitted(true);
+    
+    // Close after showing success state
+    setTimeout(() => {
+      setSubmitted(false);
+      onClose();
+    }, 2000);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-black/95 border-zinc-800/50 w-[95%] max-w-lg p-4 sm:p-6 gap-4">
+      <DialogContent className="bg-black/95 border-zinc-800/50 w-[95%] max-w-[340px] sm:max-w-md p-4 sm:p-6 gap-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-violet-500/10 via-fuchsia-500/10 to-pink-500/10 opacity-20 pointer-events-none" />
+        
         <DialogHeader className="space-y-2">
-          <DialogTitle className="text-lg sm:text-xl text-white">
-            Choose Your AI Solution
+          <DialogTitle className="text-base sm:text-lg font-semibold bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent inline-flex items-center gap-2">
+            <div className="p-1.5 rounded-lg bg-black/40">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-fuchsia-500" />
+            </div>
+            Build Your AI Solution
           </DialogTitle>
-          <DialogDescription className="text-sm text-zinc-400 [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">
-            Select the type of AI solution you want to build or connect with us directly.
+          <DialogDescription className="text-xs sm:text-sm text-zinc-400 [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">
+            Select an agent and tell us about your project requirements.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-3 py-2 sm:py-4">
-          {solutions.map((solution) => (
-            <motion.a
-              key={solution.title}
-              href={solution.href}
-              onClick={onClose}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`flex items-center gap-4 p-3 sm:p-4 rounded-xl bg-gradient-to-r ${solution.gradient} hover:opacity-90 transition-all text-left`}
-            >
-              <solution.icon className="w-5 h-5 text-white" />
-              <div>
-                <h4 className="text-sm font-medium text-white [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">{solution.title}</h4>
-                <p className="text-xs text-white/80 [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">{solution.description}</p>
-              </div>
-              <ArrowRight className="w-4 h-4 text-white ml-auto" />
-            </motion.a>
-          ))}
-        </div>
+        <form onSubmit={handleSubmit} className="grid gap-4 py-2">
+          {/* AI Type Selection */}
+          <div className="space-y-1.5">
+            <Label className="text-xs sm:text-sm text-zinc-200">Select Your Agent</Label>
+            <div className="grid gap-2">
+              {aiTypes.map((type) => (
+                <motion.button
+                  key={type.id}
+                  type="button"
+                  onClick={() => setSelectedType(type.id)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={cn(
+                    "relative flex items-start gap-3 p-3 rounded-lg text-left transition-all overflow-hidden",
+                    "border border-zinc-800 hover:border-zinc-700",
+                    selectedType === type.id
+                      ? `bg-gradient-to-r ${type.gradient} text-white`
+                      : "bg-zinc-900/80 text-zinc-400 hover:text-zinc-300"
+                  )}
+                >
+                  {/* Background Effects */}
+                  {selectedType === type.id && (
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_107%,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.05)_5%,rgba(255,255,255,0)_45%)]" />
+                  )}
 
-        <div className="border-t border-zinc-800/50 pt-4">
-          <a
-            href="https://wa.me/your_whatsapp_number"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 transition-colors text-white"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="w-5 h-5">
-              <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
-            </svg>
-            <span className="text-sm font-medium">Chat on WhatsApp</span>
-          </a>
+                  {/* Icon */}
+                  <div className={cn(
+                    "shrink-0 p-2 rounded-lg transition-colors",
+                    selectedType === type.id 
+                      ? "bg-white/10 backdrop-blur-sm"
+                      : "bg-black/40"
+                  )}>
+                    <type.icon className="w-4 h-4" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold">{type.title}</span>
+                      <span className={cn(
+                        "text-[10px] px-1.5 py-0.5 rounded-full",
+                        selectedType === type.id
+                          ? "bg-white/20 text-white"
+                          : "bg-zinc-800 text-zinc-400"
+                      )}>
+                        {type.subtitle}
+                      </span>
+                    </div>
+                    <p className="text-[11px] opacity-90 truncate">{type.description}</p>
+                    <div className="flex flex-wrap gap-1">
+                      {type.features.map((feature, index) => (
+                        <span
+                          key={index}
+                          className={cn(
+                            "text-[10px] px-1.5 py-0.5 rounded-full",
+                            selectedType === type.id
+                              ? "bg-black/20 text-white/90"
+                              : "bg-zinc-800/50 text-zinc-400"
+                          )}
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Selection Indicator */}
+                  {selectedType === type.id && (
+                    <div className="absolute top-2 right-2">
+                      <Zap className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Details */}
+          <div className="grid gap-3 sm:gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="name" className="text-xs sm:text-sm text-zinc-200">Name</Label>
+              <Input 
+                id="name" 
+                placeholder="Enter your name" 
+                className="h-8 sm:h-9 text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all" 
+                required
+                disabled={isSubmitting || submitted}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-xs sm:text-sm text-zinc-200">Email</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="Enter your email" 
+                className="h-8 sm:h-9 text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all" 
+                required
+                disabled={isSubmitting || submitted}
+              />
+            </div>
+          </div>
+
+          {/* Project Requirements */}
+          <div className="space-y-1.5">
+            <Label htmlFor="requirements" className="text-xs sm:text-sm text-zinc-200">Project Requirements</Label>
+            <Textarea 
+              id="requirements" 
+              placeholder="Tell us about your project requirements..." 
+              className="min-h-[60px] sm:min-h-[80px] text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all resize-none" 
+              required
+              disabled={isSubmitting || submitted}
+            />
+          </div>
+
+          <DialogFooter className="flex sm:justify-between gap-2 sm:gap-4 mt-2">
+            <Button 
+              type="button"
+              variant="outline" 
+              onClick={onClose}
+              className="w-full sm:w-auto h-8 sm:h-9 text-xs sm:text-sm bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-900/80 transition-all"
+              disabled={isSubmitting || submitted}
+            >
+              Cancel
+            </Button>
+            <AnimatePresence mode="wait">
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="w-full sm:w-auto h-8 sm:h-9 px-3 sm:px-4 rounded-lg flex items-center justify-center gap-2 bg-emerald-500 text-white"
+                >
+                  <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="text-xs sm:text-sm font-medium">Request Submitted!</span>
+                </motion.div>
+              ) : (
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting || !selectedType}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={cn(
+                    "w-full sm:w-auto h-8 sm:h-9 px-3 sm:px-4 rounded-lg flex items-center justify-center gap-2",
+                    "bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500",
+                    "text-white hover:opacity-90 transition-all disabled:opacity-50"
+                  )}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin" />
+                      <span className="text-xs sm:text-sm font-medium">Submitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-xs sm:text-sm font-medium">Start Building</span>
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </>
+                  )}
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </DialogFooter>
+        </form>
+
+        {/* Powered by SyntAI */}
+        <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-center">
+          <span className="text-[10px] text-zinc-500">
+            Powered by{" "}
+            <span className="font-medium bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+              SyntAI
+            </span>
+          </span>
         </div>
       </DialogContent>
     </Dialog>

@@ -11,11 +11,11 @@ import { Typewriter } from "@/components/ui/typewriter";
 
 export default function AboutUs() {
   return (
-    <section id="about-us" className="bg-black py-24">
+    <section id="process" className="bg-black py-24">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-col items-center gap-4 text-center mb-16">
           <HeroBadge 
-            text="About"
+            text="Process"
             variant="outline"
             color="violet"
             icon={<Info className="w-4 h-4" />}
