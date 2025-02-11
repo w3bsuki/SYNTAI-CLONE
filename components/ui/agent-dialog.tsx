@@ -35,55 +35,20 @@ export function AgentDialog({ isOpen, onClose, agent }: AgentDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] w-[95%] xs:w-[90%] bg-black/90 border-zinc-800/50 p-3 xs:p-4 sm:p-6 gap-0 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80" />
-        <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-[0.07]`} />
-        
-        {/* Glowing Border Effect */}
-        <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-90`}>
-          <div className="absolute inset-[1px] bg-black" />
-        </div>
-
-        {/* Header */}
-        <DialogHeader className="relative pb-3 xs:pb-4 sm:pb-5 mb-3 sm:mb-4 border-b border-zinc-800/50">
-          <div className="flex items-center gap-3 sm:gap-4">
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: 8 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative shrink-0"
-            >
-              {/* Glowing circle behind icon */}
-              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 sm:w-10 h-8 sm:h-10 bg-gradient-to-r ${colorScheme} opacity-30`} />
-              
-              {/* Icon wrapper */}
-              <div className="relative flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 rounded-xl overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme} opacity-20`} />
-                <div className="absolute inset-[1px] bg-black rounded-lg" />
-                {Icon && <Icon className={`relative z-10 h-5 w-5 sm:h-6 sm:w-6 ${textColor}`} />}
-              </div>
-            </motion.div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <DialogTitle className={`text-lg xs:text-xl font-bold bg-gradient-to-r ${colorScheme} bg-clip-text text-transparent`}>
-                  {agent.name}
-                </DialogTitle>
-                <span className="text-xs font-mono bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent font-bold tracking-tight">
-                  by SYNTAI
-                </span>
-              </div>
-              <DialogDescription className="text-xs sm:text-sm text-zinc-400 mt-0.5">
-                {agent.description}
-              </DialogDescription>
-            </div>
-          </div>
+      <DialogContent className="bg-black/95 border-zinc-800/50 w-[95%] max-w-lg p-4 sm:p-6 gap-4">
+        <DialogHeader className="space-y-2">
+          <DialogTitle className="text-lg sm:text-xl text-white">
+            {agent.name}
+          </DialogTitle>
+          <DialogDescription className="text-sm text-zinc-400 [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">
+            {agent.description}
+          </DialogDescription>
         </DialogHeader>
 
-        {/* Main Content */}
-        <div className="relative space-y-3 sm:space-y-4">
+        <div className="grid gap-4 py-2 sm:py-4">
           {/* Two Column Layout */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {/* Left Column - Core Features */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {/* Core Features */}
             <div className="space-y-2">
               <h4 className={`text-xs sm:text-sm font-medium ${textColor}`}>Core Features</h4>
               <div className="grid gap-1.5 sm:gap-2">
@@ -95,14 +60,13 @@ export function AgentDialog({ isOpen, onClose, agent }: AgentDialogProps) {
                     whileHover={{ scale: 1.01 }}
                     transition={{ delay: index * 0.1 }}
                     className="relative flex items-center px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
-                    style={{ backfaceVisibility: 'hidden' }}
                   >
                     <div className={`relative z-10 flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-gradient-to-b ${colorScheme} p-[1px]`}>
                       <div className="w-full h-full rounded-md bg-black flex items-center justify-center">
                         <Bot className={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${textColor}`} />
                       </div>
                     </div>
-                    <span className="relative z-10 text-[10px] sm:text-xs font-medium text-zinc-300 ml-2">
+                    <span className="relative z-10 text-[10px] sm:text-xs font-medium text-zinc-300 ml-2 [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">
                       {feature}
                     </span>
                   </motion.div>
@@ -110,7 +74,7 @@ export function AgentDialog({ isOpen, onClose, agent }: AgentDialogProps) {
               </div>
             </div>
 
-            {/* Right Column - Capabilities */}
+            {/* Capabilities */}
             <div className="space-y-2">
               <h4 className={`text-xs sm:text-sm font-medium ${textColor}`}>Capabilities</h4>
               <div className="grid gap-1.5 sm:gap-2">
@@ -127,14 +91,13 @@ export function AgentDialog({ isOpen, onClose, agent }: AgentDialogProps) {
                     whileHover={{ scale: 1.01 }}
                     transition={{ delay: index * 0.1 }}
                     className="relative flex items-center px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-zinc-900/50 border border-zinc-800/50"
-                    style={{ backfaceVisibility: 'hidden' }}
                   >
                     <div className={`relative z-10 flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-gradient-to-b ${colorScheme} p-[1px]`}>
                       <div className="w-full h-full rounded-md bg-black flex items-center justify-center">
                         <item.icon className={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${textColor}`} />
                       </div>
                     </div>
-                    <span className="relative z-10 text-[10px] sm:text-xs font-medium text-zinc-300 ml-2">
+                    <span className="relative z-10 text-[10px] sm:text-xs font-medium text-zinc-300 ml-2 [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">
                       {item.text}
                     </span>
                   </motion.div>
@@ -143,10 +106,10 @@ export function AgentDialog({ isOpen, onClose, agent }: AgentDialogProps) {
             </div>
           </div>
 
-          {/* Bottom Section - Description */}
+          {/* About Section */}
           <div className="space-y-2 pt-2 sm:pt-3 border-t border-zinc-800/50">
             <h4 className={`text-xs sm:text-sm font-medium ${textColor}`}>About {agent.name}</h4>
-            <p className="text-[10px] sm:text-xs text-zinc-400 leading-relaxed">
+            <p className="text-[10px] sm:text-xs text-zinc-400 leading-relaxed [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">
               {agent.name === "AIDO" 
                 ? "AIDO is an advanced AI agent specializing in data analysis and administrative tasks. With real-time processing capabilities and enterprise-grade security, AIDO streamlines your business operations through intelligent automation and data-driven insights."
                 : agent.name === "AIDY"
@@ -162,16 +125,10 @@ export function AgentDialog({ isOpen, onClose, agent }: AgentDialogProps) {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="relative w-full overflow-hidden rounded-lg"
-            style={{ backfaceVisibility: 'hidden' }}
+            className={`w-full px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm font-medium text-white bg-gradient-to-r ${colorScheme} hover:opacity-90 transition-opacity`}
           >
-            <div className={`absolute inset-0 bg-gradient-to-r ${colorScheme}`} />
-            <div className="relative flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2">
-              <span className="text-[10px] sm:text-xs font-semibold text-white">
-                Start Integration
-              </span>
-              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-            </div>
+            <span>Start Integration</span>
+            <ArrowRight className="w-4 h-4" />
           </motion.button>
         </div>
       </DialogContent>

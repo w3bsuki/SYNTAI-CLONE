@@ -9,6 +9,12 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { ServiceDialog } from "@/components/ui/service-dialog"
 import { CustomOrderDialog } from "@/components/ui/custom-order-dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { DialogClose } from "@/components/ui/dialog"
 
 // Animation variants
 const containerVariants = {
@@ -16,29 +22,17 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.3
+      duration: 0.3
     }
   }
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0 },
   show: { 
-    opacity: 1, 
-    y: 0,
+    opacity: 1,
     transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15
-    }
-  },
-  hover: {
-    y: -5,
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 25
+      duration: 0.2
     }
   }
 };
@@ -194,8 +188,7 @@ export default function Services() {
             <motion.div
               key={service.title}
               variants={cardVariants}
-              whileHover="hover"
-              className="group relative w-full cursor-pointer"
+              className="group relative w-full cursor-pointer transition-transform duration-200 hover:-translate-y-1"
               onClick={() => setSelectedService(service)}
             >
               <div className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black">
@@ -209,18 +202,15 @@ export default function Services() {
                 
                 {/* Border */}
                 <div className="absolute inset-0 rounded-2xl border-2 border-zinc-800/50" />
-                
-                {/* Spotlight Effect */}
-                <div className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)] rounded-2xl" />
 
                 {/* Card Content */}
                 <div className="relative z-20 flex flex-col items-center h-full p-6">
                   {/* Title & Description */}
                   <div className="text-center mb-6">
-                    <h3 className={`text-xl font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}>
+                    <h3 className={`text-xl font-bold bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]`}>
                       {service.title}
                     </h3>
-                    <p className="text-sm text-zinc-400 mt-2">
+                    <p className="text-sm text-zinc-400 mt-2 [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">
                       {service.description}
                     </p>
                   </div>
@@ -239,19 +229,20 @@ export default function Services() {
                             "text-violet-500"
                           }`} />
                         </div>
-                        <span className="text-sm text-zinc-300">{feature.text}</span>
+                        <span className="text-sm text-zinc-300 [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">{feature.text}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Button */}
                   <div className="w-full mt-auto">
-                    <button
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
                       className={`w-full px-4 py-3 rounded-lg flex items-center justify-center gap-2 text-sm font-medium text-white bg-gradient-to-r ${service.gradient} hover:opacity-90 transition-opacity`}
                     >
                       Learn More
                       <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
               </div>
@@ -259,57 +250,67 @@ export default function Services() {
           ))}
         </motion.div>
 
-        {/* Custom Order Card */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{ scale: 1.02 }}
-          className="group relative w-full cursor-pointer mt-8 sm:mt-12 max-w-5xl mx-auto"
-          onClick={() => setIsCustomOrderOpen(true)}
-        >
-          <div className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black/80">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80 rounded-2xl" />
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 opacity-[0.07] rounded-2xl" />
-            
-            {/* Glowing Border Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 opacity-20 rounded-2xl">
-              <div className="absolute inset-[1px] rounded-2xl bg-black" />
-            </div>
-            
-            {/* Card Content */}
-            <div className="relative z-20 flex flex-col sm:flex-row items-center justify-between p-4 sm:p-6">
-              <div className="flex items-center gap-6 mb-4 sm:mb-0">
-                {/* Icon Container */}
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                >
-                  <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-black/80 border border-zinc-800/50">
-                    <Sparkles className="w-5 h-5 text-violet-500" />
-                  </div>
-                </motion.div>
-
-                <div>
-                  <h3 className="text-xl font-bold bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
-                    Custom Solution
-                  </h3>
-                  <p className="mt-1 text-sm text-zinc-400">
-                    Build your own custom AI solution
-                  </p>
+        {/* Custom Order Button */}
+        <div className="mt-8 sm:mt-12 max-w-5xl mx-auto flex justify-center w-full">
+          <Dialog>
+            <DialogTrigger asChild>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="relative inline-flex items-center gap-2.5 px-6 py-3 rounded-xl before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-r before:from-[hsl(var(--color-1))] before:via-[hsl(var(--color-3))] before:to-[hsl(var(--color-5))] after:absolute after:inset-[2px] after:rounded-[10px] after:bg-black"
+              >
+                <span className="relative z-10 flex items-center gap-2 text-white">
+                  <Sparkles className="w-4 h-4" />
+                  <span className="text-sm font-medium">
+                    Build Custom Solution
+                  </span>
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </motion.button>
+            </DialogTrigger>
+            <DialogContent className="bg-black/95 border-zinc-800/50">
+              <DialogHeader>
+                <DialogTitle className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+                  Create Custom AI Solution
+                </DialogTitle>
+                <DialogDescription className="text-zinc-400">
+                  Tell us about your project requirements and we'll help you build the perfect AI solution.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-zinc-200">Name</Label>
+                  <Input id="name" placeholder="Enter your name" className="bg-zinc-900/80 border-zinc-800 text-zinc-200" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-zinc-200">Email</Label>
+                  <Input id="email" type="email" placeholder="Enter your email" className="bg-zinc-900/80 border-zinc-800 text-zinc-200" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="requirements" className="text-zinc-200">Project Requirements</Label>
+                  <Textarea 
+                    id="requirements" 
+                    placeholder="Describe your project requirements..." 
+                    className="bg-zinc-900/80 border-zinc-800 text-zinc-200 min-h-[120px]" 
+                  />
                 </div>
               </div>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 text-white font-medium text-sm flex items-center justify-center gap-2"
-              >
-                Get Started
-                <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button variant="outline" className="bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-900/80">
+                    Cancel
+                  </Button>
+                </DialogClose>
+                <DialogClose asChild>
+                  <Button className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 text-white border-0">
+                    Submit Request
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Service Dialog */}
@@ -326,12 +327,6 @@ export default function Services() {
           }}
         />
       )}
-
-      {/* Custom Order Dialog */}
-      <CustomOrderDialog
-        isOpen={isCustomOrderOpen}
-        onClose={() => setIsCustomOrderOpen(false)}
-      />
     </section>
   )
 }

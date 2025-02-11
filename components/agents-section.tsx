@@ -13,6 +13,11 @@ import { cn } from "@/lib/utils";
 import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/chat-input";
 import { getGeminiResponse } from "@/lib/gemini";
 import { CustomAgentDialog } from "@/components/ui/custom-agent-dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 // Animation variants
 const containerVariants = {
@@ -332,7 +337,7 @@ export default function AgentsSection() {
                       </div>
                     </motion.div>
 
-                    {/* Title & Status */}
+                    {/* Title & Description */}
                     <div className="flex flex-col items-center text-center mb-6">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="relative flex h-2 w-2">
@@ -349,7 +354,7 @@ export default function AgentsSection() {
                         </span>
                         <motion.h3
                           variants={titleVariants}
-                          className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${agent.gradient} bg-clip-text text-transparent`}
+                          className={`text-xl sm:text-2xl font-bold bg-gradient-to-r ${agent.gradient} bg-clip-text text-transparent [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]`}
                         >
                           {agent.name}
                         </motion.h3>
@@ -358,7 +363,7 @@ export default function AgentsSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="text-sm text-zinc-400 font-medium"
+                        className="text-sm text-zinc-400 font-medium [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]"
                       >
                         {agent.description}
                       </motion.p>
@@ -389,7 +394,7 @@ export default function AgentsSection() {
                               "text-orange-500"
                             }`} />
                           </div>
-                          <span className="text-sm font-medium text-zinc-300">{feature}</span>
+                          <span className="text-sm font-medium text-zinc-300 [text-shadow:_0_1px_1px_rgb(0_0_0_/_40%)]">{feature}</span>
                         </motion.div>
                       ))}
                     </div>
@@ -411,131 +416,80 @@ export default function AgentsSection() {
             );
           })}
 
-          {/* Custom Agent Card */}
-          <motion.div
-            variants={cardVariants}
-            initial="hidden"
-            animate="show"
-            whileHover="hover"
-            className="group relative w-full cursor-pointer col-span-full mt-8 sm:mt-12"
-            style={{ backfaceVisibility: 'hidden' }}
-            onClick={() => setIsCustomAgentOpen(true)}
-          >
-            {/* Card Container */}
-            <div className="relative flex flex-col h-full overflow-hidden rounded-2xl bg-black/80">
-              {/* Background Elements */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-transparent opacity-80 rounded-2xl" />
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 opacity-[0.07] rounded-2xl" />
-              
-              {/* Glowing Border Effect */}
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 opacity-20 rounded-2xl"
-                variants={{
-                  hover: {
-                    opacity: 0.3,
-                    transition: { duration: 0.3 }
-                  }
-                }}
-              >
-                <div className="absolute inset-[1px] rounded-2xl bg-black" />
-              </motion.div>
-              
-              {/* Spotlight Effect */}
-              <motion.div 
-                className="absolute inset-0 z-10 opacity-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_50%)] rounded-2xl"
-                variants={{
-                  hover: {
-                    opacity: 1,
-                    transition: { duration: 0.3 }
-                  }
-                }}
-              />
-
-              {/* Card Content */}
-              <div className="relative z-20 flex flex-col md:flex-row items-center justify-between p-4 sm:p-6 h-full">
-                <div className="flex items-center gap-6 w-full">
-                  {/* Icon Container */}
-                  <motion.div
-                    className="flex justify-center"
-                    variants={{
-                      hover: {
-                        scale: 1.1,
-                        rotate: 5,
-                        transition: {
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 25
-                        }
-                      }
-                    }}
-                  >
-                    <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-black/80 border border-zinc-800/50">
-                      <Bot className="w-5 h-5 text-violet-500" />
-                    </div>
-                  </motion.div>
-
-                  <div className="flex-1">
-                    {/* Title & Description */}
-                    <motion.h3
-                      variants={{
-                        hover: {
-                          y: -2,
-                          transition: { duration: 0.2 }
-                        }
-                      }}
-                      className="text-xl font-bold bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent"
-                    >
-                      Custom Agent
-                    </motion.h3>
-                    <motion.p 
-                      variants={{
-                        hover: {
-                          y: -2,
-                          transition: { duration: 0.2, delay: 0.05 }
-                        }
-                      }}
-                      className="mt-1 text-sm text-zinc-400"
-                    >
-                      Build your own custom AI agent tailored to your needs
-                    </motion.p>
+          {/* Custom Agent Button */}
+          <div className="col-span-full mt-8 sm:mt-12 flex justify-center w-full">
+            <Dialog>
+              <DialogTrigger asChild>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="relative inline-flex items-center gap-2.5 px-6 py-3 rounded-xl before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-r before:from-[hsl(var(--color-1))] before:via-[hsl(var(--color-3))] before:to-[hsl(var(--color-5))] after:absolute after:inset-[2px] after:rounded-[10px] after:bg-black"
+                >
+                  <span className="relative z-10 flex items-center gap-2 text-white">
+                    <Bot className="w-4 h-4" />
+                    <span className="text-sm font-medium">
+                      Build Custom Agent
+                    </span>
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </motion.button>
+              </DialogTrigger>
+              <DialogContent className="bg-black/95 border-zinc-800/50">
+                <DialogHeader>
+                  <DialogTitle className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent">
+                    Create Custom AI Agent
+                  </DialogTitle>
+                  <DialogDescription className="text-zinc-400">
+                    Tell us about your AI agent requirements and we'll help you build the perfect intelligent assistant.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-zinc-200">Name</Label>
+                    <Input id="name" placeholder="Enter your name" className="bg-zinc-900/80 border-zinc-800 text-zinc-200" />
                   </div>
-
-                  {/* Action Button */}
-                  <div className="shrink-0">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="relative overflow-hidden rounded-lg whitespace-nowrap"
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-zinc-200">Email</Label>
+                    <Input id="email" type="email" placeholder="Enter your email" className="bg-zinc-900/80 border-zinc-800 text-zinc-200" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="agent-type" className="text-zinc-200">Agent Type</Label>
+                    <select
+                      id="agent-type"
+                      className="w-full bg-zinc-900/80 border-zinc-800 text-zinc-200 rounded-lg px-3 py-2 text-sm"
                     >
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500"
-                        variants={{
-                          hover: {
-                            opacity: 0.9,
-                            transition: { duration: 0.2 }
-                          }
-                        }}
-                      />
-                      <motion.div 
-                        className="relative flex items-center justify-center gap-2 px-6 py-2.5"
-                        variants={{
-                          hover: {
-                            x: 2,
-                            transition: { duration: 0.2 }
-                          }
-                        }}
-                      >
-                        <span className="text-sm font-semibold text-white">
-                          Get Started
-                        </span>
-                        <ArrowRight className="w-4 h-4 text-white" />
-                      </motion.div>
-                    </motion.button>
+                      <option value="" disabled selected>Select agent type</option>
+                      <option value="data">Data & Administration (AIDO)</option>
+                      <option value="support">Customer Support (AIDY)</option>
+                      <option value="fullstack">Fullstack Agent (AIDR)</option>
+                      <option value="custom">Custom Agent</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="requirements" className="text-zinc-200">Agent Requirements</Label>
+                    <Textarea 
+                      id="requirements" 
+                      placeholder="Describe your AI agent requirements..." 
+                      className="bg-zinc-900/80 border-zinc-800 text-zinc-200 min-h-[120px]" 
+                    />
                   </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline" className="bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-900/80">
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <DialogClose asChild>
+                    <Button className="bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 text-white border-0">
+                      Submit Request
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
         </motion.div>
 
         {/* Chat Input Section */}
