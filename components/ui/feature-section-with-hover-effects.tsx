@@ -2,35 +2,101 @@
 
 import { cn } from "@/lib/utils";
 import { Search, Code, Bot, Rocket, ChartLine } from "lucide-react";
+import { motion } from "framer-motion";
+import { RainbowButton } from "@/components/ui/rainbow-button";
+import { ProcessDialog } from "@/components/ui/process-dialog";
+import { useState } from "react";
+
+const processSteps = [
+  {
+    number: 1,
+    title: "Discovery",
+    description: "We first analyze your business and internal processes",
+    icon: Search,
+    gradient: "from-blue-500 via-cyan-400 to-blue-600",
+    details: {
+      what: "A comprehensive analysis phase where we dive deep into your business processes, data infrastructure, and AI opportunities.",
+      how: [
+        "Business process analysis",
+        "Data assessment & mapping",
+        "Opportunity identification",
+        "ROI potential evaluation"
+      ],
+      outcome: "A clear understanding of your AI potential and a prioritized list of opportunities."
+    }
+  },
+  {
+    number: 2,
+    title: "Plan",
+    description: "Strategic roadmap and solution architecture for your AI journey.",
+    icon: Code,
+    gradient: "from-emerald-500 via-green-500 to-teal-500",
+    details: {
+      what: "Strategic roadmap development that aligns AI solutions with your business objectives and technical capabilities.",
+      how: [
+        "Solution architecture design",
+        "Technology stack selection",
+        "Resource planning",
+        "Timeline development"
+      ],
+      outcome: "A detailed implementation plan with clear milestones and deliverables."
+    }
+  },
+  {
+    number: 3,
+    title: "Build",
+    description: "Development and training of your personalized AI agents.",
+    icon: Bot,
+    gradient: "from-violet-500 via-fuchsia-500 to-pink-500",
+    details: {
+      what: "Development and training of custom AI solutions tailored to your specific needs and use cases.",
+      how: [
+        "AI model development",
+        "Integration design",
+        "Testing & validation",
+        "Performance optimization"
+      ],
+      outcome: "Production-ready AI solutions that seamlessly integrate with your systems."
+    }
+  },
+  {
+    number: 4,
+    title: "Launch",
+    description: "Seamless deployment with comprehensive team training.",
+    icon: Rocket,
+    gradient: "from-orange-500 via-pink-500 to-red-500",
+    details: {
+      what: "Smooth deployment of AI solutions with comprehensive training and support for your team.",
+      how: [
+        "Deployment planning",
+        "Team training",
+        "System monitoring setup",
+        "Performance tracking"
+      ],
+      outcome: "Successfully implemented AI solutions with trained teams ready to utilize them."
+    }
+  },
+  {
+    number: 5,
+    title: "Scale",
+    description: "Expand and optimize your AI capabilities for maximum impact.",
+    icon: ChartLine,
+    gradient: "from-indigo-500 via-purple-500 to-pink-500",
+    details: {
+      what: "Continuous optimization and expansion of your AI capabilities to maximize business impact.",
+      how: [
+        "Performance monitoring",
+        "Capability expansion",
+        "Process optimization",
+        "ROI tracking"
+      ],
+      outcome: "Scalable AI solutions that grow with your business needs."
+    }
+  },
+];
 
 export function FeaturesSectionWithHoverEffects() {
-  const processSteps = [
-    {
-      title: "Discovery",
-      description: "We analyze your business processes and identify AI opportunities.",
-      icon: Search,
-    },
-    {
-      title: "Plan",
-      description: "Strategic roadmap and solution architecture for your AI journey.",
-      icon: Code,
-    },
-    {
-      title: "Build",
-      description: "Development and training of your personalized AI agents.",
-      icon: Bot,
-    },
-    {
-      title: "Launch",
-      description: "Seamless deployment with comprehensive team training.",
-      icon: Rocket,
-    },
-    {
-      title: "Scale",
-      description: "Expand and optimize your AI capabilities for maximum impact.",
-      icon: ChartLine,
-    },
-  ];
+  const [selectedStep, setSelectedStep] = useState<typeof processSteps[0] | null>(null);
 
   return (
     <div className="relative z-10 py-24 sm:py-32">
@@ -46,10 +112,20 @@ export function FeaturesSectionWithHoverEffects() {
               {...step} 
               index={index} 
               isLast={index === processSteps.length - 1}
+              onClick={() => setSelectedStep(step)}
             />
           ))}
         </div>
       </div>
+
+      {/* Process Dialog */}
+      {selectedStep && (
+        <ProcessDialog
+          isOpen={!!selectedStep}
+          onClose={() => setSelectedStep(null)}
+          step={selectedStep}
+        />
+      )}
     </div>
   );
 }
@@ -59,42 +135,67 @@ const ProcessStep = ({
   description,
   icon: Icon,
   index,
-  isLast
+  isLast,
+  gradient,
+  onClick
 }: {
   title: string;
   description: string;
   icon: any;
   index: number;
   isLast: boolean;
+  gradient: string;
+  onClick: () => void;
 }) => {
   return (
-    <div className="relative group h-full">
+    <motion.div 
+      className="relative group h-full cursor-pointer"
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      onClick={onClick}
+    >
       {/* Step Container */}
       <div className={cn(
-        "flex flex-col items-center text-center px-4 sm:px-6 py-6 sm:py-10 relative h-full",
-        "hover:bg-zinc-900/50 transition-all duration-300",
-        "rounded-xl border border-blue-500/20",
-        "backdrop-blur-sm",
-        "group-hover:border-blue-500/40"
+        "relative flex flex-col items-center text-center px-4 sm:px-6 py-8 sm:py-10",
+        "rounded-2xl border overflow-hidden",
+        "backdrop-blur-sm h-full min-h-[240px]"
       )}>
-        {/* Step Number */}
-        <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 bg-blue-500/10 border border-blue-500/30 rounded-full px-2 sm:px-3 py-0.5 sm:py-1">
-          <span className="text-xs sm:text-sm font-medium text-blue-400">Step {index + 1}</span>
-        </div>
-
-        {/* Icon */}
-        <div className="relative size-12 sm:size-16 mb-4 sm:mb-6 rounded-xl bg-gradient-to-b from-blue-500/10 to-transparent border border-blue-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <Icon className="size-6 sm:size-8 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
-        </div>
+        {/* Border gradient */}
+        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-20`} />
+        <div className="absolute inset-[1px] rounded-2xl bg-black" />
 
         {/* Content */}
-        <h3 className="text-base sm:text-xl font-semibold text-zinc-200 mb-2 sm:mb-3 relative z-10">
-          {title}
-        </h3>
-        <p className="text-xs sm:text-sm leading-relaxed text-zinc-400 relative z-10">
-          {description}
-        </p>
+        <div className="relative z-10 flex flex-col items-center h-full w-full">
+          {/* Icon Container */}
+          <div className={`relative mb-6 rounded-lg`}>
+            <div className={`flex items-center justify-center w-12 h-12 rounded-lg border bg-black ${
+              gradient.includes("blue") ? "border-blue-500/50" :
+              gradient.includes("emerald") ? "border-emerald-500/50" :
+              gradient.includes("violet") ? "border-violet-500/50" :
+              gradient.includes("orange") ? "border-orange-500/50" :
+              "border-indigo-500/50"
+            }`}>
+              <Icon className={`w-6 h-6 ${
+                gradient.includes("blue") ? "text-blue-500" :
+                gradient.includes("emerald") ? "text-emerald-500" :
+                gradient.includes("violet") ? "text-violet-500" :
+                gradient.includes("orange") ? "text-orange-500" :
+                "text-indigo-500"
+              }`} />
+            </div>
+          </div>
+
+          {/* Title */}
+          <h3 className={`text-lg font-semibold bg-gradient-to-r ${gradient} bg-clip-text text-transparent mb-4`}>
+            {index + 1}. {title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-sm text-zinc-400 leading-relaxed">
+            {description}
+          </p>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
-}; 
+};

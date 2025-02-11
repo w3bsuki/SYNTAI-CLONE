@@ -243,4 +243,17 @@
   .reveal[data-direction="down"] {
     transform: translateY(-50px);
   }
+
+  .animate-grid-pattern {
+    animation: grid-pattern 20s linear infinite;
+  }
+}
+
+@keyframes grid-pattern {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
 }

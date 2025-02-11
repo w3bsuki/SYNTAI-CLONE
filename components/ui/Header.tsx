@@ -97,75 +97,66 @@ export default function Header() {
       )}
     >
       <div className="relative mx-auto w-full">
-        <div className="mx-auto max-w-[1400px] px-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex h-20 items-center justify-between">
             {/* Logo - Left */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex shrink-0"
-            >
+            <div className="flex shrink-0 w-[140px]">
               <Link 
                 href="/" 
-                className="group flex items-center gap-2"
+                className="flex items-center"
               >
-                <motion.span 
-                  className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent transition-colors duration-200"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                >
-                  Synt AI
-                </motion.span>
+                <div className="relative flex items-center">
+                  <span className="text-xl font-light tracking-widest bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent font-['Inter']">
+                    SYNT
+                  </span>
+                  <span className="relative text-xl font-light tracking-widest bg-gradient-to-r from-violet-400 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent font-['Inter']">
+                    AI
+                  </span>
+                </div>
               </Link>
-            </motion.div>
+            </div>
 
             {/* Navigation - Center */}
-            <motion.div 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="hidden md:flex items-center gap-8"
-            >
-              {navigationItems.map((item) => (
-                <motion.div
-                  key={item.name}
-                  whileHover={{ y: -2 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                >
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "group relative py-2",
-                      "text-[15px] font-medium tracking-wide transition-all duration-200",
-                      item.isHighlighted 
-                        ? "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent hover:opacity-80" 
-                        : "text-zinc-400 hover:text-white",
-                      activeSection === item.href.substring(1) && "text-white"
-                    )}
+            <div className="hidden md:flex items-center justify-center">
+              <div className="flex items-center gap-10">
+                {navigationItems.map((item) => (
+                  <motion.div
+                    key={item.name}
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
-                    {item.name}
-                    <span className={cn(
-                      "absolute inset-x-0 -bottom-1 h-px",
-                      "bg-gradient-to-r from-transparent via-blue-500 to-transparent",
-                      "opacity-0 transition-all duration-300 group-hover:opacity-100",
-                      activeSection === item.href.substring(1) && "opacity-100"
-                    )} />
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.div>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "group relative py-2",
+                        "text-[15px] font-medium tracking-wide transition-all duration-200",
+                        item.isHighlighted 
+                          ? "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent hover:opacity-80" 
+                          : "text-zinc-400 hover:text-white",
+                        activeSection === item.href.substring(1) && "text-white"
+                      )}
+                    >
+                      {item.name}
+                      <span className={cn(
+                        "absolute inset-x-0 -bottom-1 h-px",
+                        "bg-gradient-to-r from-transparent via-blue-500 to-transparent",
+                        "opacity-0 transition-all duration-300 group-hover:opacity-100",
+                        activeSection === item.href.substring(1) && "opacity-100"
+                      )} />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
 
             {/* Right Section */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex items-center gap-4"
-            >
+            <div className="flex items-center w-[140px] justify-end">
               {/* Contact Us Button - Keeping original styling */}
               <div className="hidden md:block">
                 <Link href="/#contact">
-                  <RainbowButton className="flex items-center gap-2">
-                    <span className="relative z-10">Contact Us</span>
-                    <ArrowRight className="relative z-10 w-4 h-4" />
+                  <RainbowButton className="h-9 px-4 whitespace-nowrap">
+                    <span className="relative z-10 text-sm">Contact Us</span>
+                    <ArrowRight className="relative z-10 w-4 h-4 ml-1" />
                   </RainbowButton>
                 </Link>
               </div>
@@ -183,7 +174,7 @@ export default function Header() {
                   <Menu className="h-6 w-6" />
                 )}
               </motion.button>
-            </motion.div>
+            </div>
           </nav>
         </div>
       </div>
@@ -197,13 +188,13 @@ export default function Header() {
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           className="absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-zinc-800/50 md:hidden"
         >
-          <div className="mx-auto max-w-[1400px] px-6">
-            <div className="py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="py-6">
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ staggerChildren: 0.1, delayChildren: 0.1 }}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-4"
               >
                 {navigationItems.map((item) => (
                   <motion.div

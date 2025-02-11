@@ -13,15 +13,15 @@ interface HeroBadgeProps {
   endIcon?: React.ReactNode;
   variant?: "default" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
-  color?: "blue" | "purple" | "orange" | "emerald";
+  color?: "blue" | "purple" | "orange" | "emerald" | "violet" | "indigo";
   className?: string;
   onClick?: () => void;
 }
 
 const badgeVariants: Record<string, string> = {
-  default: "bg-zinc-900/80 hover:bg-zinc-900/90",
-  outline: "border hover:bg-zinc-900/90",
-  ghost: "hover:bg-zinc-900/50",
+  default: "bg-zinc-900/80 border border-zinc-800/50 hover:bg-zinc-900/90",
+  outline: "border border-zinc-800/50 hover:bg-zinc-900/90",
+  ghost: "border-0",
 };
 
 const sizeVariants: Record<string, string> = {
@@ -30,32 +30,66 @@ const sizeVariants: Record<string, string> = {
   lg: "px-5 py-2 text-base gap-2.5",
 };
 
-const colorVariants: Record<string, { gradient: string; icon: string; glow: string }> = {
+const colorVariants: Record<string, { gradient: string; icon: string; glow: string; text: string }> = {
   blue: {
     gradient: "from-blue-500/10 via-cyan-500/10 to-blue-500/10",
     icon: "text-blue-400/80 group-hover:text-blue-400",
-    glow: "from-blue-500/20 via-cyan-500/20 to-blue-500/20"
-  },
-  purple: {
-    gradient: "from-purple-500/10 via-violet-500/10 to-purple-500/10",
-    icon: "text-purple-400/80 group-hover:text-purple-400",
-    glow: "from-purple-500/20 via-violet-500/20 to-purple-500/20"
-  },
-  orange: {
-    gradient: "from-orange-500/10 via-amber-500/10 to-orange-500/10",
-    icon: "text-orange-400/80 group-hover:text-orange-400",
-    glow: "from-orange-500/20 via-amber-500/20 to-orange-500/20"
+    glow: "from-blue-500/20 via-cyan-500/20 to-blue-500/20",
+    text: "from-blue-500 via-cyan-400 to-blue-600"
   },
   emerald: {
     gradient: "from-emerald-500/10 via-green-500/10 to-emerald-500/10",
     icon: "text-emerald-400/80 group-hover:text-emerald-400",
-    glow: "from-emerald-500/20 via-green-500/20 to-emerald-500/20"
+    glow: "from-emerald-500/20 via-green-500/20 to-emerald-500/20",
+    text: "from-emerald-500 via-green-500 to-teal-500"
+  },
+  violet: {
+    gradient: "from-violet-500/10 via-fuchsia-500/10 to-violet-500/10",
+    icon: "text-violet-400/80 group-hover:text-violet-400",
+    glow: "from-violet-500/20 via-fuchsia-500/20 to-violet-500/20",
+    text: "from-violet-500 via-fuchsia-500 to-pink-500"
+  },
+  orange: {
+    gradient: "from-orange-500/10 via-amber-500/10 to-orange-500/10",
+    icon: "text-orange-400/80 group-hover:text-orange-400",
+    glow: "from-orange-500/20 via-amber-500/20 to-orange-500/20",
+    text: "from-orange-500 via-amber-500 to-red-500"
+  },
+  indigo: {
+    gradient: "from-indigo-500/10 via-purple-500/10 to-indigo-500/10",
+    icon: "text-indigo-400/80 group-hover:text-indigo-400",
+    glow: "from-indigo-500/20 via-purple-500/20 to-indigo-500/20",
+    text: "from-indigo-500 via-purple-500 to-pink-500"
   }
 };
 
 const iconAnimationVariants: Variants = {
-  initial: { rotate: 0 },
-  hover: { rotate: -10 },
+  initial: { rotate: 0, scale: 1 },
+  hover: { 
+    rotate: -10,
+    scale: 1.1,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 10
+    }
+  }
+};
+
+const badgeAnimationVariants: Variants = {
+  initial: { 
+    scale: 1,
+    y: 0
+  },
+  hover: { 
+    scale: 1.05,
+    y: -2,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 15
+    }
+  }
 };
 
 export default function HeroBadge({
@@ -76,12 +110,7 @@ export default function HeroBadge({
   const wrapperProps = href ? { href } : { onClick };
 
   const baseClassName = cn(
-    "relative inline-flex items-center rounded-full transition-all duration-200",
-    "bg-zinc-900/80 backdrop-blur-xl border-zinc-800/50",
-    {
-      [`before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r ${colorScheme.gradient} before:opacity-0 hover:before:opacity-100 before:transition-opacity`]: true,
-      [`after:absolute after:inset-0 after:rounded-full after:border after:border-${color}-500/20 after:opacity-0 hover:after:opacity-100 after:transition-opacity`]: true
-    },
+    "inline-flex items-center rounded-full transition-all duration-200",
     badgeVariants[variant],
     sizeVariants[size],
     className
@@ -96,9 +125,9 @@ export default function HeroBadge({
         className={baseClassName}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
+        whileHover="hover"
+        variants={badgeAnimationVariants}
         transition={{ duration: 0.8, ease }}
-        onHoverStart={() => controls.start("hover")}
-        onHoverEnd={() => controls.start("initial")}
       >
         {/* Glow effect */}
         <motion.div
@@ -115,18 +144,24 @@ export default function HeroBadge({
           <motion.div
             className={cn(colorScheme.icon, "transition-colors")}
             variants={iconAnimationVariants}
-            initial="initial"
-            animate={controls}
-            transition={{ type: "spring", stiffness: 300, damping: 10 }}
           >
             {icon}
           </motion.div>
         )}
-        <span className="relative bg-gradient-to-r from-white via-zinc-300 to-white bg-clip-text text-transparent font-medium">
+        <motion.span 
+          className={`relative bg-gradient-to-r ${colorScheme.text} bg-clip-text text-transparent font-medium`}
+          variants={{
+            initial: { opacity: 0.9 },
+            hover: { opacity: 1 }
+          }}
+        >
           {text}
-        </span>
+        </motion.span>
         {endIcon && (
-          <motion.div className={cn(colorScheme.icon, "transition-colors")}>
+          <motion.div 
+            className={cn(colorScheme.icon, "transition-colors")}
+            variants={iconAnimationVariants}
+          >
             {endIcon}
           </motion.div>
         )}

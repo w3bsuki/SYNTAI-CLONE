@@ -25,6 +25,7 @@ interface TypewriterProps {
     animate: Variants["animate"]
   }
   cursorClassName?: string
+  onTextChange?: (index: number) => void
 }
 
 const Typewriter = ({
@@ -51,6 +52,7 @@ const Typewriter = ({
       },
     },
   },
+  onTextChange,
 }: TypewriterProps) => {
   const [displayText, setDisplayText] = useState<{ prefix: string; suffix: string }>({ prefix: "", suffix: "" })
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -79,7 +81,9 @@ const Typewriter = ({
           if (currentTextIndex === texts.length - 1 && !loop) {
             return
           }
-          setCurrentTextIndex((prev) => (prev + 1) % texts.length)
+          const nextIndex = (currentTextIndex + 1) % texts.length
+          setCurrentTextIndex(nextIndex)
+          onTextChange?.(nextIndex)
           setCurrentIndex(0)
           timeout = setTimeout(() => {}, waitTime)
         } else {
@@ -132,6 +136,7 @@ const Typewriter = ({
     texts,
     currentTextIndex,
     loop,
+    onTextChange
   ])
 
   const currentText = texts[currentTextIndex]

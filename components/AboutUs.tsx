@@ -6,6 +6,8 @@ import { TextShimmer } from "@/components/ui/text-shimmer";
 import { Info, ArrowRight, MessageSquare } from "lucide-react";
 import HeroBadge from "@/components/ui/hero-badge";
 import { motion } from "framer-motion";
+import { RainbowButton } from "@/components/ui/rainbow-button";
+import { Typewriter } from "@/components/ui/typewriter";
 
 export default function AboutUs() {
   return (
@@ -15,11 +17,30 @@ export default function AboutUs() {
           <HeroBadge 
             text="About"
             variant="outline"
+            color="violet"
             icon={<Info className="w-4 h-4" />}
           />
-          <TextShimmer as="h2" className="max-w-2xl text-4xl font-bold text-white" duration={3}>
-            Our Process
-          </TextShimmer>
+          <div className="mt-4 sm:mt-6 flex flex-col items-center">
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-4 sm:mb-6" />
+            <h2 className="text-4xl font-medium tracking-tight">
+              <span>
+                <Typewriter 
+                  text={[
+                    { prefix: "The", suffix: " Process", prefixColor: "text-white", suffixColor: "bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 bg-clip-text text-transparent" },
+                    { prefix: "The", suffix: " Journey", prefixColor: "text-white", suffixColor: "bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 bg-clip-text text-transparent" },
+                    { prefix: "The", suffix: " Roadmap", prefixColor: "text-white", suffixColor: "bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent" }
+                  ]}
+                  speed={100}
+                  waitTime={3000}
+                  loop={true}
+                  className="inline-block"
+                  cursorClassName="text-blue-400 ml-1"
+                />
+              </span>
+            </h2>
+            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-4 sm:mt-6" />
+          </div>
+
           <p className="text-zinc-400 max-w-2xl">
             From discovery to deployment, we guide you through every step of your AI transformation journey.
           </p>
@@ -38,19 +59,16 @@ export default function AboutUs() {
             <p className="text-zinc-400 mb-8">
               Get in touch with our experts and discover how our AI solutions can drive your business forward.
             </p>
-            <div className="flex items-center justify-center gap-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative inline-flex items-center gap-2 px-8 h-12 rounded-xl overflow-hidden"
+            <div className="flex items-center justify-center">
+              <RainbowButton
+                onClick={() => window.location.href = '/#contact'}
+                variant="black"
+                className="w-full sm:w-auto"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500" />
-                <div className="relative z-10 flex items-center gap-2 text-white">
-                  <MessageSquare className="w-4 h-4" />
-                  Contact Us Now
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </div>
-              </motion.button>
+                <MessageSquare className="w-4 h-4" />
+                <span>Contact Us Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </RainbowButton>
             </div>
           </div>
         </div>

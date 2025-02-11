@@ -19,21 +19,6 @@ export default function LogoCloud() {
   return (
     <div className="w-full bg-black">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto max-w-2xl text-center mb-4"
-        >
-          <p className="text-sm text-zinc-500">
-            SyntAI works with{" "}
-            <span className="text-zinc-300 underline decoration-zinc-700 underline-offset-4">
-              Generative AI Companies
-            </span>
-            , U.S. Government Agencies & Enterprises
-          </p>
-        </motion.div>
         <div className="mx-auto grid grid-cols-2 items-center gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-6 pb-8">
           {logos.map((logo, index) => (
             <motion.div
