@@ -53,7 +53,7 @@ export default function Hero() {
   return (
     <LazyMotion features={domAnimation}>
       <section 
-        className="relative w-full bg-black overflow-hidden min-h-[calc(100vh-80px)] pb-12 sm:pb-16 lg:pb-20" 
+        className="relative w-full bg-black overflow-hidden min-h-[calc(100vh-80px)]" 
         aria-label="Hero Section"
       >
         {/* Background Effects - with will-change optimization */}
@@ -64,14 +64,16 @@ export default function Hero() {
         />
         
         {/* Content Container */}
-        <div className="container relative mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-80px)] pt-20 sm:pt-24 md:pt-32">
-          {/* Main Content */}
-          <div className="w-full max-w-[90rem] space-y-12 sm:space-y-16 lg:space-y-20">
-            {/* Top Announcement */}
+        <div className="container relative mx-auto flex flex-col min-h-[calc(100vh-80px)]">
+          {/* Top Announcement - Now in a properly spaced container */}
+          <div className="pt-6 sm:pt-8 md:pt-10">
             <Suspense fallback={<div className="h-12 w-full max-w-md mx-auto animate-pulse bg-zinc-800/50 rounded-full" />}>
               <TopAnnouncementComponent />
             </Suspense>
+          </div>
 
+          {/* Main Content - Centered in remaining space */}
+          <div className="flex-1 flex flex-col items-center justify-center w-full max-w-[90rem] mx-auto">
             <div className="flex flex-col items-center space-y-8 sm:space-y-10 lg:space-y-12 w-full max-w-[1200px] mx-auto px-4 sm:px-6">
               {/* Main Heading */}
               <ScrollReveal>
@@ -129,6 +131,9 @@ export default function Hero() {
               </ScrollReveal>
             </div>
           </div>
+
+          {/* Bottom Spacing */}
+          <div className="h-12 sm:h-16 md:h-20" />
         </div>
 
         {/* Gradient Separator */}
