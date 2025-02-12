@@ -53,7 +53,7 @@ export default function Hero() {
   return (
     <LazyMotion features={domAnimation}>
       <section 
-        className="relative w-full bg-black overflow-hidden min-h-[calc(100vh-80px)] pb-20 sm:pb-32 lg:pb-40" 
+        className="relative w-full bg-black overflow-hidden min-h-[calc(100vh-80px)] pb-12 sm:pb-16 lg:pb-20" 
         aria-label="Hero Section"
       >
         {/* Background Effects - with will-change optimization */}
@@ -64,7 +64,7 @@ export default function Hero() {
         />
         
         {/* Content Container */}
-        <div className="container relative mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-80px)] py-16 sm:py-20">
+        <div className="container relative mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-80px)] pt-20 sm:pt-24 md:pt-32">
           {/* Main Content */}
           <div className="w-full max-w-[90rem] space-y-12 sm:space-y-16 lg:space-y-20">
             {/* Top Announcement */}
@@ -95,7 +95,7 @@ export default function Hero() {
 
               {/* Description */}
               <ScrollReveal delay={0.2}>
-                <p className="text-base sm:text-lg text-zinc-400 max-w-2xl text-center mx-auto leading-relaxed">
+                <p className="text-base sm:text-lg text-zinc-400 max-w-2xl text-center mx-auto leading-relaxed px-4 sm:px-0">
                   Experience the next generation of AI with our specialized agents. From data analysis to 
                   full-stack development, unlock unprecedented efficiency and innovation for your enterprise.
                 </p>
@@ -103,7 +103,7 @@ export default function Hero() {
 
               {/* CTA Buttons */}
               <ScrollReveal delay={0.4} direction="up">
-                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-md">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 w-full max-w-md px-4 sm:px-0">
                   <Suspense fallback={<div className="h-[44px] w-full sm:w-[180px] animate-pulse bg-zinc-800/50 rounded-lg" />}>
                     <RainbowButton
                       onClick={handleDemoClick}

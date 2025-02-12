@@ -126,7 +126,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="relative overflow-hidden bg-black py-12 sm:py-16 md:py-24 -mt-12 sm:-mt-16 md:-mt-24">
+    <section id="services" className="relative overflow-hidden bg-black py-12 sm:py-16 md:py-20 -mt-8 sm:-mt-12" aria-label="Services Section">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(24,24,27,0.5),rgba(0,0,0,1))]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />

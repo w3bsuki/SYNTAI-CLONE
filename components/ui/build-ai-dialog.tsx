@@ -69,117 +69,119 @@ export function BuildAiDialog({ isOpen, onClose }: BuildAiDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-black/95 border-zinc-800/50 w-[95%] max-w-[340px] sm:max-w-md p-4 sm:p-6 gap-4 overflow-hidden">
+      <DialogContent className="bg-black/95 border-zinc-800/50 w-[95%] max-w-[340px] sm:max-w-md md:max-w-lg p-3 sm:p-4 md:p-6 gap-3 sm:gap-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-violet-500/10 via-fuchsia-500/10 to-pink-500/10 opacity-20 pointer-events-none" />
         
-        <DialogHeader className="space-y-2">
-          <DialogTitle className="text-base sm:text-lg font-semibold bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent inline-flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-black/40">
-              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-fuchsia-500" />
+        <DialogHeader className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+          <DialogTitle className="text-sm sm:text-base md:text-lg font-semibold bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent inline-flex items-center gap-2">
+            <div className="p-1 sm:p-1.5 rounded-lg bg-black/40">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-fuchsia-500" />
             </div>
             Build Your AI Solution
           </DialogTitle>
-          <DialogDescription className="text-xs sm:text-sm text-zinc-400 [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">
+          <DialogDescription className="text-[11px] sm:text-xs md:text-sm text-zinc-400 [text-shadow:_0_1px_2px_rgb(0_0_0_/_60%)]">
             Select an agent and tell us about your project requirements.
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="grid gap-4 py-2">
+        <form onSubmit={handleSubmit} className="grid gap-6 sm:gap-8">
           {/* AI Type Selection */}
-          <div className="space-y-1.5">
-            <Label className="text-xs sm:text-sm text-zinc-200">Select Your Agent</Label>
-            <div className="grid gap-2">
-              {aiTypes.map((type) => (
-                <motion.button
-                  key={type.id}
-                  type="button"
-                  onClick={() => setSelectedType(type.id)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={cn(
-                    "relative flex items-start gap-3 p-3 rounded-lg text-left transition-all overflow-hidden",
-                    "border border-zinc-800 hover:border-zinc-700",
-                    selectedType === type.id
-                      ? `bg-gradient-to-r ${type.gradient} text-white`
-                      : "bg-zinc-900/80 text-zinc-400 hover:text-zinc-300"
-                  )}
-                >
-                  {/* Background Effects */}
-                  {selectedType === type.id && (
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_107%,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.05)_5%,rgba(255,255,255,0)_45%)]" />
-                  )}
+          <div className="space-y-4 sm:space-y-5">
+            <div className="space-y-2 sm:space-y-3">
+              <Label className="text-[11px] sm:text-xs md:text-sm text-zinc-200">Select Your Agent</Label>
+              <div className="grid gap-2 sm:gap-3">
+                {aiTypes.map((type) => (
+                  <motion.button
+                    key={type.id}
+                    type="button"
+                    onClick={() => setSelectedType(type.id)}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    className={cn(
+                      "relative flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg text-left transition-all overflow-hidden",
+                      "border border-zinc-800 hover:border-zinc-700",
+                      selectedType === type.id
+                        ? `bg-gradient-to-r ${type.gradient} text-white`
+                        : "bg-zinc-900/80 text-zinc-400 hover:text-zinc-300"
+                    )}
+                  >
+                    {/* Background Effects */}
+                    {selectedType === type.id && (
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_107%,rgba(255,255,255,0.05)_0%,rgba(255,255,255,0.05)_5%,rgba(255,255,255,0)_45%)]" />
+                    )}
 
-                  {/* Icon */}
-                  <div className={cn(
-                    "shrink-0 p-2 rounded-lg transition-colors",
-                    selectedType === type.id 
-                      ? "bg-white/10 backdrop-blur-sm"
-                      : "bg-black/40"
-                  )}>
-                    <type.icon className="w-4 h-4" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="space-y-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold">{type.title}</span>
-                      <span className={cn(
-                        "text-[10px] px-1.5 py-0.5 rounded-full",
-                        selectedType === type.id
-                          ? "bg-white/20 text-white"
-                          : "bg-zinc-800 text-zinc-400"
-                      )}>
-                        {type.subtitle}
-                      </span>
+                    {/* Icon */}
+                    <div className={cn(
+                      "shrink-0 p-2 rounded-lg transition-colors",
+                      selectedType === type.id 
+                        ? "bg-white/10 backdrop-blur-sm"
+                        : "bg-black/40"
+                    )}>
+                      <type.icon className="w-4 h-4" />
                     </div>
-                    <p className="text-[11px] opacity-90 truncate">{type.description}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {type.features.map((feature, index) => (
-                        <span
-                          key={index}
-                          className={cn(
-                            "text-[10px] px-1.5 py-0.5 rounded-full",
-                            selectedType === type.id
-                              ? "bg-black/20 text-white/90"
-                              : "bg-zinc-800/50 text-zinc-400"
-                          )}
-                        >
-                          {feature}
+
+                    {/* Content */}
+                    <div className="space-y-1 min-w-0">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="text-xs sm:text-sm font-semibold">{type.title}</span>
+                        <span className={cn(
+                          "text-[9px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 rounded-full",
+                          selectedType === type.id
+                            ? "bg-white/20 text-white"
+                            : "bg-zinc-800 text-zinc-400"
+                        )}>
+                          {type.subtitle}
                         </span>
-                      ))}
+                      </div>
+                      <p className="text-[10px] sm:text-[11px] opacity-90 truncate">{type.description}</p>
+                      <div className="flex flex-wrap gap-1">
+                        {type.features.map((feature, index) => (
+                          <span
+                            key={index}
+                            className={cn(
+                              "text-[8px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 rounded-full",
+                              selectedType === type.id
+                                ? "bg-black/20 text-white/90"
+                                : "bg-zinc-800/50 text-zinc-400"
+                            )}
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Selection Indicator */}
-                  {selectedType === type.id && (
-                    <div className="absolute top-2 right-2">
-                      <Zap className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                </motion.button>
-              ))}
+                    {/* Selection Indicator */}
+                    {selectedType === type.id && (
+                      <div className="absolute top-2 right-2">
+                        <Zap className="w-3 h-3 text-white" />
+                      </div>
+                    )}
+                  </motion.button>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Contact Details */}
-          <div className="grid gap-3 sm:gap-4">
-            <div className="space-y-1.5">
+          <div className="grid gap-4 sm:gap-5">
+            <div className="space-y-2">
               <Label htmlFor="name" className="text-xs sm:text-sm text-zinc-200">Name</Label>
               <Input 
                 id="name" 
                 placeholder="Enter your name" 
-                className="h-8 sm:h-9 text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all" 
+                className="h-9 sm:h-10 text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all" 
                 required
                 disabled={isSubmitting || submitted}
               />
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label htmlFor="email" className="text-xs sm:text-sm text-zinc-200">Email</Label>
               <Input 
                 id="email" 
                 type="email" 
                 placeholder="Enter your email" 
-                className="h-8 sm:h-9 text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all" 
+                className="h-9 sm:h-10 text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all" 
                 required
                 disabled={isSubmitting || submitted}
               />
@@ -187,18 +189,18 @@ export function BuildAiDialog({ isOpen, onClose }: BuildAiDialogProps) {
           </div>
 
           {/* Project Requirements */}
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor="requirements" className="text-xs sm:text-sm text-zinc-200">Project Requirements</Label>
             <Textarea 
               id="requirements" 
               placeholder="Tell us about your project requirements..." 
-              className="min-h-[60px] sm:min-h-[80px] text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all resize-none" 
+              className="min-h-[80px] sm:min-h-[100px] text-xs sm:text-sm bg-zinc-900/80 border-zinc-800 text-zinc-200 focus:ring-2 focus:ring-fuchsia-500/20 transition-all resize-none" 
               required
               disabled={isSubmitting || submitted}
             />
           </div>
 
-          <DialogFooter className="flex sm:justify-between gap-2 sm:gap-4 mt-2">
+          <DialogFooter className="flex sm:justify-between gap-3 sm:gap-4 mt-4 sm:mt-6">
             <Button 
               type="button"
               variant="outline" 

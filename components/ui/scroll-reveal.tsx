@@ -19,13 +19,17 @@ export function ScrollReveal({
   once = true
 }: ScrollRevealProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once });
+  const isInView = useInView(ref, { 
+    once,
+    margin: "-20% 0px -20% 0px", // Trigger earlier on mobile
+    amount: 0.3 // Only need 30% of element to be visible
+  });
 
   const directionOffset = {
-    up: { y: 50 },
-    down: { y: -50 },
-    left: { x: 50 },
-    right: { x: -50 }
+    up: { y: 30 }, // Reduced from 50 for mobile
+    down: { y: -30 },
+    left: { x: 30 },
+    right: { x: -30 }
   };
 
   return (
@@ -41,7 +45,7 @@ export function ScrollReveal({
         x: isInView ? 0 : directionOffset[direction]?.x
       }}
       transition={{
-        duration: 0.8,
+        duration: 0.5,
         delay,
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
